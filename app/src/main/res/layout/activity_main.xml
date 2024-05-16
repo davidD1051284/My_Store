@@ -4,26 +4,158 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="#18A661"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="test"
+    <View
+        android:id="@+id/view3"
+        android:layout_width="209dp"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/editTextText4"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextText4"
+        tools:layout_editor_absoluteY="26dp" />
+
+    <EditText
+        android:id="@+id/editTextText4"
+        android:layout_width="210dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:hint="搜尋"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintTop_toTopOf="@+id/view3"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="123dp" />
+
+    <ImageButton
+        android:id="@+id/search_btn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/round_btn"
+        app:srcCompat="@drawable/search"
+        tools:layout_editor_absoluteX="342dp"
+        tools:layout_editor_absoluteY="26dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:background="@drawable/my_inform_background"
+        app:srcCompat="@drawable/human"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="8dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="378dp"
+        android:layout_height="291dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/view2">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="分類篩選"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <CheckBox
+            android:id="@+id/shoes_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="鞋子" />
+
+        <CheckBox
+            android:id="@+id/clothe_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="衣服" />
+
+        <CheckBox
+            android:id="@+id/food_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="食物" />
+
+        <CheckBox
+            android:id="@+id/drink_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="飲料" />
+
+        <CheckBox
+            android:id="@+id/electric_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="電器" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="272dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="進階篩選"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <CheckBox
+            android:id="@+id/fivestar_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5.0以上" />
+
+        <CheckBox
+            android:id="@+id/fourstar_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4.0以上" />
+
+        <CheckBox
+            android:id="@+id/threestar_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3.0以上" />
+
+        <CheckBox
+            android:id="@+id/twostar_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2.0以上" />
+
+        <CheckBox
+            android:id="@+id/onestar_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1.0以上" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
