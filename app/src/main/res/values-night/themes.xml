@@ -3,5 +3,6 @@
     <style name="Base.Theme.MyStore" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorAccent">@android:color/white</item>
     </style>
 </resources>
