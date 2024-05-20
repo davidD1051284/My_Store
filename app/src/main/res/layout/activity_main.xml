@@ -59,11 +59,11 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="378dp"
-        android:layout_height="291dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="0dp"
+        android:layout_height="233dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,46 +72,46 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:text="分類篩選"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <CheckBox
             android:id="@+id/shoes_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="鞋子" />
 
         <CheckBox
             android:id="@+id/clothe_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="衣服" />
 
         <CheckBox
             android:id="@+id/food_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="食物" />
 
         <CheckBox
             android:id="@+id/drink_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="飲料" />
 
         <CheckBox
             android:id="@+id/electric_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="電器" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="272dp"
+        android:layout_height="224dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,31 +128,31 @@
         <CheckBox
             android:id="@+id/fivestar_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="5.0以上" />
 
         <CheckBox
             android:id="@+id/fourstar_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="4.0以上" />
 
         <CheckBox
             android:id="@+id/threestar_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="3.0以上" />
 
         <CheckBox
             android:id="@+id/twostar_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="2.0以上" />
 
         <CheckBox
             android:id="@+id/onestar_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="37dp"
             android:text="1.0以上" />
 
     </LinearLayout>
