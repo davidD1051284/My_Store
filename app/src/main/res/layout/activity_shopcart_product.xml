@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_shopcart_image"
+        android:layout_width="97dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tv_shopcart_product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AA"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_shopcart_product_price"
+        app:layout_constraintTop_toTopOf="@+id/iv_shopcart_image" />
+
+    <TextView
+        android:id="@+id/tv_shopcart_product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="NT$100"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_shopcart_image"
+        app:layout_constraintStart_toEndOf="@+id/iv_shopcart_image" />
+
+    <Button
+        android:id="@+id/btn_shopcart_delete"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
+        android:layout_width="29dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="16dp"
+        android:text="X"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_shopcart_product_name" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/btn_shopcart_delete"
+        tools:layout_editor_absoluteY="78dp">
+
+        <Button
+            android:id="@+id/btn_shopcart_decrease"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:text="-"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_shopcart_product_amount"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="Text"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btn_shopcart_add"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:text="+" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

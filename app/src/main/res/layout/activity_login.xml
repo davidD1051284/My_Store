@@ -7,7 +7,7 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_shopcart_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -24,9 +24,9 @@
         android:layout_marginTop="16dp"
         android:text="MyStore"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/iv_shopcart_image"
+        app:layout_constraintStart_toStartOf="@+id/iv_shopcart_image"
+        app:layout_constraintTop_toBottomOf="@+id/iv_shopcart_image" />
 
     <EditText
         android:id="@+id/et_account_register"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tv_shopcart_product_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -71,8 +71,8 @@
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="@+id/textView6" />
+        app:layout_constraintStart_toEndOf="@+id/tv_shopcart_product_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_shopcart_product_name" />
 
     <Button
         android:id="@+id/btn_create_account"
