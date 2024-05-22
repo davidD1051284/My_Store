@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MyStore"
         tools:targetApi="31">
         <activity
+            android:name=".TopUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".shopcart_product"
             android:exported="false" />
         <activity
