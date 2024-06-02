@@ -98,15 +98,11 @@ public class LoginActivity extends AppCompatActivity {
                     return "用戶被禁用";
                 case "ERROR_TOO_MANY_REQUESTS":
                     return "請求過多，請稍後再試";
-                case "ERROR_OPERATION_NOT_ALLOWED":
-                    return "不允許的操作";
-                case "ERROR_INVALID_CREDENTIAL":
-                    return "無效憑證";
                 default:
-                    return "登入失敗：" + authException.getMessage();
+                    return "登入失敗";
             }
         } else {
-            return "登入失敗：" + exception.getMessage();
+            return "登入失敗";
         }
     }
 }

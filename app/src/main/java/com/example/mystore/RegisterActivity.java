@@ -82,23 +82,13 @@ public class RegisterActivity extends AppCompatActivity {
                     return "該電子郵件地址已被註冊";
                 case "ERROR_INVALID_EMAIL":
                     return "無效的信箱格式";
-                case "ERROR_WRONG_PASSWORD":
-                    return "密碼錯誤";
-                case "ERROR_USER_NOT_FOUND":
-                    return "用戶不存在";
-                case "ERROR_USER_DISABLED":
-                    return "用戶被禁用";
                 case "ERROR_TOO_MANY_REQUESTS":
                     return "請求過多，請稍後再試";
-                case "ERROR_OPERATION_NOT_ALLOWED":
-                    return "不允許的操作";
-                case "ERROR_INVALID_CREDENTIAL":
-                    return "無效憑證";
                 default:
-                    return "註冊失敗：" + authException.getMessage();
+                    return "註冊失敗";
             }
         } else {
-            return "註冊失敗：" + exception.getMessage();
+            return "註冊失敗";
         }
     }
 }
