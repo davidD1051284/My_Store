@@ -4,4 +4,6 @@
     <string name="title_home">Home</string>
     <string name="title_cart">Cart</string>
     <string name="title_person_info">PersonInfo</string>
+    <string name="product_details">Product Details</string>
+    <string name="detailed_product_info">Detailed Product Info</string>
 </resources>
