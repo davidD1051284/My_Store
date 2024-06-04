@@ -107,6 +107,29 @@
         app:layout_constraintTop_toBottomOf="@id/btn_transaction_history" />
 
     <Button
+        android:id="@+id/btn_launched_product"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_person_info"
+        android:backgroundTint="#00FFFFFF"
+        android:drawablePadding="8dp"
+        android:gravity="start|center_vertical"
+        android:padding="16dp"
+        android:text="上架商品"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        android:textColorHighlight="#00FFFFFF"
+        android:textColorLink="#00FFFFFF"
+        app:icon="@drawable/ic_launched_product"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:iconSize="48dp"
+        app:iconTint="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_language" />
+
+    <Button
         android:id="@+id/btn_sign_out"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -126,5 +149,5 @@
         app:iconTint="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_language" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_launched_product" />
 </androidx.constraintlayout.widget.ConstraintLayout>

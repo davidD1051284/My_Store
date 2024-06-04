@@ -1,5 +1,6 @@
 package com.example.mystore;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -7,7 +8,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.mystore.database.UserInfos;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TopUpActivity extends AppCompatActivity {
     private Spinner spMoney;
@@ -17,6 +36,8 @@ public class TopUpActivity extends AppCompatActivity {
     private String[] paymentMethods = {"匯款", "信用卡"};
     private int selectMoney;
     private String selectPaymentMethod;
+    private FirebaseAuth mAuth;
+    private TextView tvTest;
 
 
     @Override
@@ -27,6 +48,8 @@ public class TopUpActivity extends AppCompatActivity {
         spMoney = findViewById(R.id.sp_money);
         spPaymentMethod = findViewById(R.id.sp_payment_method);
         btnTopUp = findViewById(R.id.btn_top_up);
+
+        mAuth = FirebaseAuth.getInstance();
 
         // 金額選擇 spinner
         ArrayAdapter<String> spMoneyAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, money);
@@ -66,9 +89,53 @@ public class TopUpActivity extends AppCompatActivity {
         View.OnClickListener btnTopUpListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (!selectPaymentMethod.equals("未選擇")) {
+                    topUpBalance(selectMoney);
+                }
             }
         };
         btnTopUp.setOnClickListener(btnTopUpListener);
     }
+
+    private void topUpBalance(int money) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userEmail = currentUser.getEmail();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("userInfos");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // User存在，更新balance
+                    UserInfos userInfo = dataSnapshot.getValue(UserInfos.class);
+                    int newBalance = userInfo.getBalance() + money;
+                    ref.child("balance").setValue(newBalance)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(TopUpActivity.this, "儲值成功", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(TopUpActivity.this, "儲值失敗", Toast.LENGTH_SHORT).show();
+                            });
+                } else {
+                    // User不存在，新建userInfo
+                    UserInfos newUser = new UserInfos(userEmail, money);
+                    ref.setValue(newUser)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(TopUpActivity.this, "儲值成功", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(TopUpActivity.this, "儲值失敗", Toast.LENGTH_SHORT).show();
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(TopUpActivity.this, "讀取失敗", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
