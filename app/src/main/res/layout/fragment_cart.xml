@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/listView3"
+        android:id="@+id/lv_item_list_cart"
         android:layout_width="358dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toTopOf="@+id/view4" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_lump_sum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

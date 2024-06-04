@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.example.mystore;
 
 import android.os.Bundle;
 import android.widget.ImageView;

@@ -33,12 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".ProductDetailsActivity" />
         <activity android:name=".DetailedProductInfoActivity" />
         <activity
@@ -51,16 +45,10 @@
             android:name=".product_information"
             android:exported="false" />
         <activity
-            android:name=".shoplist"
-            android:exported="false" />
-        <activity
             android:name=".search"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
-        <activity
-            android:name=".shopcart"
             android:exported="false" />
         <activity
             android:name=".insert_product"

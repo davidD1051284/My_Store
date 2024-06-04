@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mystore.LoginActivity;
+import com.example.mystore.TopUpActivity;
 import com.example.mystore.databinding.FragmentPersonInfoBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -21,6 +22,7 @@ public class PersonInfoFragment extends Fragment {
     private FragmentPersonInfoBinding binding;
     private FirebaseAuth mAuth;
     private Button btnSignOut;
+    private Button btnTopUp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,15 @@ public class PersonInfoFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
+            }
+        });
+
+        btnTopUp = binding.btnTopUp;
+        btnTopUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TopUpActivity.class);
+                startActivity(intent);
             }
         });
 
