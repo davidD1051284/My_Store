@@ -56,8 +56,7 @@
         android:ems="10"
         android:hint="價格"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/et_insert_product_amount"
         app:layout_constraintStart_toStartOf="@+id/tv_product_price"
         app:layout_constraintTop_toBottomOf="@+id/tv_product_price" />
 
@@ -65,10 +64,11 @@
         android:id="@+id/tv_product_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="商品庫存"
-        app:layout_constraintStart_toStartOf="@+id/et_insert_product_price"
-        app:layout_constraintTop_toBottomOf="@+id/et_insert_product_price" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toEndOf="@+id/tv_product_price"
+        app:layout_constraintTop_toTopOf="@+id/tv_product_price" />
 
     <EditText
         android:id="@+id/et_insert_product_amount"
@@ -90,8 +90,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="商品描述"
-        app:layout_constraintStart_toStartOf="@+id/et_insert_product_amount"
-        app:layout_constraintTop_toBottomOf="@+id/et_insert_product_amount" />
+        app:layout_constraintStart_toStartOf="@+id/et_insert_product_price"
+        app:layout_constraintTop_toBottomOf="@+id/et_insert_product_price" />
 
     <EditText
         android:id="@+id/et_insert_product_description"
@@ -111,28 +111,32 @@
         android:id="@+id/btn_insert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="88dp"
         android:text="上架商品"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_select_image" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_select_image" />
 
     <ImageView
         android:id="@+id/iv_select_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="128dp"
+        android:layout_height="123dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/border_imageview"
+        android:rotation="0"
+        android:rotationX="0"
+        android:rotationY="0"
         app:layout_constraintStart_toStartOf="@+id/et_insert_product_description"
-        app:layout_constraintTop_toBottomOf="@+id/et_insert_product_description"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/et_insert_product_description" />
 
     <Button
         android:id="@+id/btn_select_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="60dp"
         android:text="選擇圖片"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_insert_product_description" />

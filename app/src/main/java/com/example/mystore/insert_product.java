@@ -8,14 +8,24 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class insert_product extends AppCompatActivity {
     private static final String DATABASE_NAME = "my_store.db";
@@ -25,6 +35,8 @@ public class insert_product extends AppCompatActivity {
     private EditText etProductName, etProductPrice, etProductAmount, etProductDescription;
     private ImageView ivSelectImage;
     private Uri productImageUri;
+    private DatabaseReference databaseReference;
+    private StorageReference storageReference;
 
     private ActivityResultLauncher<Intent> selectImageLauncher;
     @Override
@@ -41,6 +53,9 @@ public class insert_product extends AppCompatActivity {
         etProductAmount = findViewById(R.id.et_insert_product_amount);
         etProductDescription = findViewById(R.id.et_insert_product_description);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
+
         selectImageLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -49,6 +64,7 @@ public class insert_product extends AppCompatActivity {
                         try {
                             Bitmap bitmap = getResizedBitmap(productImageUri, 300);
                             ivSelectImage.setImageBitmap(bitmap);
+                            ivSelectImage.setBackgroundResource(0); // clean ImageView border
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -75,18 +91,57 @@ public class insert_product extends AppCompatActivity {
         String productDescription = etProductDescription.getText().toString().trim();
 
         if (productName.isEmpty() || productPrice <= 0 || productAmount <= 0 || productDescription.isEmpty()) {
+            Toast.makeText(this, "請填入所有商品資訊和選擇商品圖片", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        try {
-            byte[] productImage = getBytesFromUri(productImageUri, 300);
+        uploadToFirebase(productName, productPrice, productAmount, productDescription, productImageUri);
 
-            SqlDataBaseHelper dbHelper = new SqlDataBaseHelper(this, DATABASE_NAME, null, DATABASE_VERSION, DATABASE_TABLE);
-            dbHelper.insertProduct(productName, productPrice, productAmount, productDescription, productImage);
+    }
+
+    private void uploadToFirebase(String productName, int productPrice, int productAmount, String productDescription, Uri productImageUri) {
+        String uniqueID = UUID.randomUUID().toString();
+        StorageReference imageRef = storageReference.child("images/" + uniqueID);
+
+        try {
+            Bitmap bitmap = getResizedBitmap(productImageUri, 300);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+            UploadTask uploadTask = imageRef.putBytes(data);
+            uploadTask.addOnSuccessListener(taskSnapshot -> imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                String imageUrl = uri.toString();
+                saveProductToDataBase(productName, productPrice, productAmount, productDescription, imageUrl);
+            })).addOnFailureListener(e -> {
+                Toast.makeText(insert_product.this, "Failed to upload image", Toast.LENGTH_LONG).show();
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    private void saveProductToDataBase(String productName, int productPrice, int productAmount, String productDescription, String imageUrl) {
+        Map<String, Object> productData = new HashMap<>();
+        productData.put("productName", productName);
+        productData.put("productPrice", productPrice);
+        productData.put("productAmount", productAmount);
+        productData.put("productDescription", productDescription);
+        productData.put("productImage", imageUrl);
+
+        databaseReference.child("products").push().setValue(productData).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(insert_product.this, "Product added successfully", Toast.LENGTH_SHORT).show();
+                // Clear the fields
+                etProductName.setText("");
+                etProductPrice.setText("");
+                etProductAmount.setText("");
+                etProductDescription.setText("");
+                ivSelectImage.setImageResource(0);
+            } else {
+                Toast.makeText(insert_product.this, "Failed to add product", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     private byte[] getBytesFromUri(Uri uri, int maxSize) throws IOException {
