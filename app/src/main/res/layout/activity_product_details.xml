@@ -14,7 +14,7 @@
             android:id="@+id/productImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/sample_product.png" />
+            android:src="@drawable/sample_product_img" />
 
         <TextView
             android:id="@+id/productName"
