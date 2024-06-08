@@ -19,11 +19,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mystore.LoginActivity;
 import com.example.mystore.R;
-import com.example.mystore.RegisterActivity;
 import com.example.mystore.database.UserInfos;
 import com.example.mystore.databinding.FragmentCartBinding;
-import com.example.mystore.ui.cart.CartItem;
-import com.example.mystore.ui.cart.CartAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -72,7 +69,7 @@ public class CartFragment extends Fragment {
         if (currentUser != null) {
             userEmail = currentUser.getEmail();
         } else {
-            Toast.makeText(getContext(), "未知的用戶", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "用戶未登入", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
             getActivity().finish();
@@ -104,6 +101,7 @@ public class CartFragment extends Fragment {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
+                    // Error
                 }
             });
         }
@@ -112,7 +110,7 @@ public class CartFragment extends Fragment {
     private void updateLumpSum() {
         int total = 0;
         for (CartItem item : cartItems) {
-            total += item.getProductPrice() * item.getProductStock();
+            total += item.getProductPrice() * item.getProductAmount();
         }
         tvLumpSum.setText("總金額 NT$" + total);
     }
@@ -126,39 +124,55 @@ public class CartFragment extends Fragment {
                         UserInfos userInfo = userSnapshot.getValue(UserInfos.class);
                         if (userInfo != null) {
                             int userBalance = userInfo.getBalance();
-                            int totalAmount = 0;
-                            boolean isStockAvailable = true;
+                            int[] totalAmount = {0};
+                            boolean[] isStockAvailable = {true};
 
                             for (CartItem item : cartItems) {
-                                if (item.getProductStock() <= 0) {
-                                    isStockAvailable = false;
-                                    break;
-                                }
-                                totalAmount += item.getProductPrice() * item.getProductStock();
-                            }
+                                getProductStockFromDb(item.getProductId(), new StockCallback() {
+                                    @Override
+                                    public void onStockRetrieved(int stock) {
+                                        if (item.getProductAmount() > stock) {
+                                            isStockAvailable[0] = false;
+                                        } else {
+                                            totalAmount[0] += item.getProductPrice() * item.getProductAmount();
+                                        }
 
-                            if (!isStockAvailable) {
-                                Toast.makeText(getContext(), "商品數量不足", Toast.LENGTH_LONG).show();
-                            } else if (userBalance < totalAmount) {
-                                Toast.makeText(getContext(), "餘額不足", Toast.LENGTH_LONG).show();
-                            } else {
-                                // 交易成功
-                                for (CartItem item : cartItems) {
-                                    int newStock = item.getProductStock() - item.getProductStock();
-                                    productReference.child(item.getProductId()).child("productStock").setValue(newStock);
-                                }
-                                int newBalance = userBalance - totalAmount;
-                                userReference.child(userSnapshot.getKey()).child("balance").setValue(newBalance);
+                                        if (isStockAvailable[0]) {
+                                            if (userBalance >= totalAmount[0]) {
+                                                // 交易成功
+                                                for (CartItem item : cartItems) {
+                                                    int newStock = item.getProductAmount() - item.getProductAmount();
+                                                    productReference.child(item.getProductId()).child("productAmount").setValue(newStock);
+                                                }
+                                                int newBalance = userBalance - totalAmount[0];
+                                                userReference.child(userSnapshot.getKey()).child("balance").setValue(newBalance);
 
-                                Toast.makeText(getContext(), "交易成功", Toast.LENGTH_LONG).show();
-                                // 清空購物車
-                                SharedPreferences.Editor editor = getContext().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE).edit();
-                                editor.clear();
-                                editor.apply();
-                                cartItems.clear();
-                                cartAdapter.notifyDataSetChanged();
-                                updateLumpSum();
+                                                Toast.makeText(getContext(), "交易成功", Toast.LENGTH_LONG).show();
+                                                // 清空購物車
+                                                SharedPreferences.Editor editor = getContext().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE).edit();
+                                                editor.clear();
+                                                editor.apply();
+                                                cartItems.clear();
+                                                cartAdapter.notifyDataSetChanged();
+                                                updateLumpSum();
+                                            } else {
+                                                Toast.makeText(getContext(), "餘額不足", Toast.LENGTH_LONG).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(getContext(), "商品數量不足", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(DatabaseError error) {
+                                        Toast.makeText(getContext(), "交易失敗", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                if (!isStockAvailable[0]) break; // 退出循環
                             }
+                        } else {
+                            Toast.makeText(getContext(), "餘額不足", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {
@@ -169,6 +183,30 @@ public class CartFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), "交易失敗", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public interface StockCallback {
+        void onStockRetrieved(int stock);
+        void onError(DatabaseError error);
+    }
+
+    private void getProductStockFromDb(String productId, StockCallback callback) {
+        productReference.child(productId).child("productAmount").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int stock = snapshot.getValue(Integer.class);
+                    callback.onStockRetrieved(stock);
+                } else {
+                    callback.onError(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onError(error);
             }
         });
     }

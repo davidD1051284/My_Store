@@ -61,23 +61,23 @@ public class CartAdapter extends BaseAdapter {
         CartItem cartItem = cartItems.get(position);
 
         holder.tvProductName.setText(cartItem.getProductName());
-        holder.tvProductPrice.setText("NT$" + cartItem.getProductPrice() * cartItem.getProductStock());
-        holder.tvProductNum.setText(String.valueOf(cartItem.getProductStock()));
+        holder.tvProductPrice.setText("NT$" + cartItem.getProductPrice() * cartItem.getProductAmount());
+        holder.tvProductNum.setText(String.valueOf(cartItem.getProductAmount()));
 
         Glide.with(context).load(cartItem.getProductImageUrl()).into(holder.ivProductImage);
 
         holder.btnIncrease.setOnClickListener(v -> {
-            if (cartItem.getProductStock() >= 9) {
+            if (cartItem.getProductAmount() >= 9) {
                 return;
             }
-            cartItem.setProductStock(cartItem.getProductStock() + 1);
+            cartItem.setProductAmount(cartItem.getProductAmount() + 1);
             notifyDataSetChanged();
             updateLumpSumListener.updateLumpSum();
         });
 
         holder.btnDecrease.setOnClickListener(v -> {
-            if (cartItem.getProductStock() > 1) {
-                cartItem.setProductStock(cartItem.getProductStock() - 1);
+            if (cartItem.getProductAmount() > 1) {
+                cartItem.setProductAmount(cartItem.getProductAmount() - 1);
                 notifyDataSetChanged();
                 updateLumpSumListener.updateLumpSum();
             }
