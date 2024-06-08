@@ -3,6 +3,7 @@ package com.example.mystore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -99,29 +100,41 @@ public class TopUpActivity extends AppCompatActivity {
 
     private void topUpBalance(int money) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userEmail = currentUser.getEmail();
+        if (currentUser == null) {
+            Toast.makeText(TopUpActivity.this, "用戶未登錄", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(TopUpActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
+        String userEmail = currentUser.getEmail();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("userInfos");
 
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.orderByChild("email").equalTo(userEmail).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     // User存在，更新balance
-                    UserInfos userInfo = dataSnapshot.getValue(UserInfos.class);
-                    int newBalance = userInfo.getBalance() + money;
-                    ref.child("balance").setValue(newBalance)
-                            .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(TopUpActivity.this, "儲值成功", Toast.LENGTH_SHORT).show();
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(TopUpActivity.this, "儲值失敗", Toast.LENGTH_SHORT).show();
-                            });
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        UserInfos userInfo = userSnapshot.getValue(UserInfos.class);
+                        if (userInfo != null) {
+                            int newBalance = userInfo.getBalance() + money;
+                            userSnapshot.getRef().child("balance").setValue(newBalance)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Toast.makeText(TopUpActivity.this, "儲值成功", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(TopUpActivity.this, "儲值失敗", Toast.LENGTH_SHORT).show();
+                                    });
+                        }
+                    }
                 } else {
                     // User不存在，新建userInfo
+                    String userId = ref.push().getKey();
                     UserInfos newUser = new UserInfos(userEmail, money);
-                    ref.setValue(newUser)
+                    ref.child(userId).setValue(newUser)
                             .addOnSuccessListener(aVoid -> {
                                 Toast.makeText(TopUpActivity.this, "儲值成功", Toast.LENGTH_SHORT).show();
                             })
