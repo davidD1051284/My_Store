@@ -4,17 +4,17 @@ public class CartItem {
     private String productId;
     private String productName;
     private int productPrice;
-    private String productImageUrl;
+    private String productImage;
     private int productAmount;
 
     public CartItem() {
     }
 
-    public CartItem(String productId, String productName, int productPrice, String productImageUrl, int productAmount) {
+    public CartItem(String productId, String productName, int productPrice, String productImage, int productAmount) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
-        this.productImageUrl = productImageUrl;
+        this.productImage = productImage;
         this.productAmount = productAmount;
     }
 
@@ -42,12 +42,12 @@ public class CartItem {
         this.productPrice = productPrice;
     }
 
-    public String getProductImageUrl() {
-        return productImageUrl;
+    public String getProductImage() {
+        return productImage;
     }
 
-    public void setProductImageUrl(String productImageUrl) {
-        this.productImageUrl = productImageUrl;
+    public void setProductImageUrl(String productImage) {
+        this.productImage = productImage;
     }
 
     public int getProductAmount() {

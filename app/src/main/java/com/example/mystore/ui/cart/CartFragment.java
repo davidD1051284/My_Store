@@ -1,10 +1,12 @@
 package com.example.mystore.ui.cart;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +32,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CartFragment extends Fragment {
 
@@ -44,6 +49,7 @@ public class CartFragment extends Fragment {
     private DatabaseReference userReference;
     private String userEmail;
     private FirebaseAuth mAuth;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +82,8 @@ public class CartFragment extends Fragment {
             return root;
         }
 
+        saveAllProductIdsToPrefs();
+
         loadCartItems();
         updateLumpSum();
 
@@ -87,21 +95,48 @@ public class CartFragment extends Fragment {
     private void loadCartItems() {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
         cartItems.clear();
-        for (String productId : sharedPreferences.getAll().keySet()) {
+
+        // 顯示載入中視窗
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("載入中...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        Set<String> productIds = sharedPreferences.getStringSet("productIds", new HashSet<>());
+
+        AtomicInteger itemCount = new AtomicInteger(productIds.size());
+
+        for (String productId : productIds) {
             productReference.child(productId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Log.d("FirebaseData", "DataSnapshot: " + snapshot.getValue());
                     CartItem cartItem = snapshot.getValue(CartItem.class);
                     if (cartItem != null) {
+                        cartItem.setProductId(productId);
                         cartItems.add(cartItem);
                         cartAdapter.notifyDataSetChanged();
                         updateLumpSum();
+                    } else {
+                        Log.e("CartItemError", "CartItem is null for productId: " + productId);
+                    }
+
+                    // 檢查商品是否都載入完畢
+                    if (itemCount.decrementAndGet() == 0) {
+                        // 隱藏載入中視窗
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    // Error
+                    Log.e("FirebaseError", "DatabaseError: " + error.getMessage());
+                    // 隱藏載入中視窗
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
                 }
             });
         }
@@ -124,8 +159,10 @@ public class CartFragment extends Fragment {
                         UserInfos userInfo = userSnapshot.getValue(UserInfos.class);
                         if (userInfo != null) {
                             int userBalance = userInfo.getBalance();
-                            int[] totalAmount = {0};
-                            boolean[] isStockAvailable = {true};
+                            AtomicInteger totalBalance = new AtomicInteger(0);
+                            final boolean[] isStockAvailable = {true};
+
+                            AtomicInteger itemCount = new AtomicInteger(cartItems.size());
 
                             for (CartItem item : cartItems) {
                                 getProductStockFromDb(item.getProductId(), new StockCallback() {
@@ -133,33 +170,49 @@ public class CartFragment extends Fragment {
                                     public void onStockRetrieved(int stock) {
                                         if (item.getProductAmount() > stock) {
                                             isStockAvailable[0] = false;
+                                            Toast.makeText(getContext(), item.getProductName() + " 數量不足", Toast.LENGTH_LONG).show();
                                         } else {
-                                            totalAmount[0] += item.getProductPrice() * item.getProductAmount();
+                                            totalBalance.addAndGet(item.getProductPrice() * item.getProductAmount());
                                         }
 
-                                        if (isStockAvailable[0]) {
-                                            if (userBalance >= totalAmount[0]) {
-                                                // 交易成功
-                                                for (CartItem item : cartItems) {
-                                                    int newStock = item.getProductAmount() - item.getProductAmount();
-                                                    productReference.child(item.getProductId()).child("productAmount").setValue(newStock);
-                                                }
-                                                int newBalance = userBalance - totalAmount[0];
-                                                userReference.child(userSnapshot.getKey()).child("balance").setValue(newBalance);
+                                        // 如果商品都處理完畢
+                                        if (itemCount.decrementAndGet() == 0) {
+                                            if (!isStockAvailable[0]) {
+                                                return;
+                                            }
 
-                                                Toast.makeText(getContext(), "交易成功", Toast.LENGTH_LONG).show();
-                                                // 清空購物車
-                                                SharedPreferences.Editor editor = getContext().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE).edit();
-                                                editor.clear();
-                                                editor.apply();
-                                                cartItems.clear();
-                                                cartAdapter.notifyDataSetChanged();
-                                                updateLumpSum();
+                                            if (userBalance >= totalBalance.get()) {
+                                                // 交易成功
+                                                AtomicInteger count = new AtomicInteger(cartItems.size());
+
+                                                for (CartItem item : cartItems) {
+                                                    getProductStockFromDb(item.getProductId(), new StockCallback() {
+                                                        @Override
+                                                        public void onStockRetrieved(int stock) {
+                                                            int newStock = stock - item.getProductAmount();
+                                                            updateProductStock(item.getProductId(), newStock);
+
+                                                            // 如果所有商品的庫存都更新完畢
+                                                            if (count.decrementAndGet() == 0) {
+                                                                // 更新並顯示餘額
+                                                                int newBalance = userBalance - totalBalance.get();
+                                                                updateUserBalance(userSnapshot.getKey(), newBalance);
+                                                                showTransactionSuccessDialog(newBalance);
+
+                                                                // 清空購物車
+                                                                clearCart();
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onError(DatabaseError error) {
+                                                            Toast.makeText(getContext(), "交易失敗", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }
                                             } else {
                                                 Toast.makeText(getContext(), "餘額不足", Toast.LENGTH_LONG).show();
                                             }
-                                        } else {
-                                            Toast.makeText(getContext(), "商品數量不足", Toast.LENGTH_LONG).show();
                                         }
                                     }
 
@@ -168,23 +221,53 @@ public class CartFragment extends Fragment {
                                         Toast.makeText(getContext(), "交易失敗", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
-                                if (!isStockAvailable[0]) break; // 退出循環
                             }
                         } else {
+                            // 用戶未儲值過
                             Toast.makeText(getContext(), "餘額不足", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {
+                    // 沒有商品在購物車中
                     Toast.makeText(getContext(), "交易失敗", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                // Error
                 Toast.makeText(getContext(), "交易失敗", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // 更新商品庫存
+    private void updateProductStock(String productId, int newStock) {
+        productReference.child(productId).child("productAmount").setValue(newStock);
+    }
+
+    // 更新用戶餘額
+    private void updateUserBalance(String userId, int newBalance) {
+        userReference.child(userId).child("balance").setValue(newBalance);
+    }
+
+    // 清空購物車
+    private void clearCart() {
+        SharedPreferences.Editor editor = getContext().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE).edit();
+        editor.clear();
+        editor.apply();
+        cartItems.clear();
+        cartAdapter.notifyDataSetChanged();
+        updateLumpSum();
+    }
+
+    // 交易成功視窗
+    private void showTransactionSuccessDialog(int newBalance) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("交易成功")
+                .setMessage("目前餘額 NT$" + newBalance)
+                .setPositiveButton("確定", (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     public interface StockCallback {
@@ -192,6 +275,7 @@ public class CartFragment extends Fragment {
         void onError(DatabaseError error);
     }
 
+    // 從Database取得商品庫存
     private void getProductStockFromDb(String productId, StockCallback callback) {
         productReference.child(productId).child("productAmount").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -215,5 +299,33 @@ public class CartFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    // 測試用
+    private void saveAllProductIdsToPrefs() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        productReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Set<String> productIds = new HashSet<>();
+                for (DataSnapshot productSnapshot : snapshot.getChildren()) {
+                    String productId = productSnapshot.getKey();
+                    if (productId != null) {
+                        productIds.add(productId);
+                    }
+                }
+
+                // 更新SharedPreferences
+                editor.putStringSet("productIds", productIds);
+                editor.apply();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+            }
+        });
     }
 }

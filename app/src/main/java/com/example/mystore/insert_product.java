@@ -14,6 +14,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -37,8 +39,10 @@ public class insert_product extends AppCompatActivity {
     private Uri productImageUri;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
+    private FirebaseAuth mAuth;
 
     private ActivityResultLauncher<Intent> selectImageLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,7 @@ public class insert_product extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
 
         selectImageLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -96,7 +101,6 @@ public class insert_product extends AppCompatActivity {
         }
 
         uploadToFirebase(productName, productPrice, productAmount, productDescription, productImageUri);
-
     }
 
     private void uploadToFirebase(String productName, int productPrice, int productAmount, String productDescription, Uri productImageUri) {
@@ -122,26 +126,34 @@ public class insert_product extends AppCompatActivity {
     }
 
     private void saveProductToDataBase(String productName, int productPrice, int productAmount, String productDescription, String imageUrl) {
-        Map<String, Object> productData = new HashMap<>();
-        productData.put("productName", productName);
-        productData.put("productPrice", productPrice);
-        productData.put("productAmount", productAmount);
-        productData.put("productDescription", productDescription);
-        productData.put("productImage", imageUrl);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userEmail = currentUser.getEmail();
 
-        databaseReference.child("products").push().setValue(productData).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(insert_product.this, "Product added successfully", Toast.LENGTH_SHORT).show();
-                // Clear the fields
-                etProductName.setText("");
-                etProductPrice.setText("");
-                etProductAmount.setText("");
-                etProductDescription.setText("");
-                ivSelectImage.setImageResource(0);
-            } else {
-                Toast.makeText(insert_product.this, "Failed to add product", Toast.LENGTH_SHORT);
-            }
-        });
+            Map<String, Object> productData = new HashMap<>();
+            productData.put("productName", productName);
+            productData.put("productPrice", productPrice);
+            productData.put("productAmount", productAmount);
+            productData.put("productDescription", productDescription);
+            productData.put("productImage", imageUrl);
+            productData.put("seller", userEmail);
+
+            databaseReference.child("products").push().setValue(productData).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(insert_product.this, "Product added successfully", Toast.LENGTH_SHORT).show();
+                    // Clear the fields
+                    etProductName.setText("");
+                    etProductPrice.setText("");
+                    etProductAmount.setText("");
+                    etProductDescription.setText("");
+                    ivSelectImage.setImageResource(0);
+                } else {
+                    Toast.makeText(insert_product.this, "Failed to add product", Toast.LENGTH_SHORT);
+                }
+            });
+        } else {
+            Toast.makeText(insert_product.this, "User not logged in", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private byte[] getBytesFromUri(Uri uri, int maxSize) throws IOException {

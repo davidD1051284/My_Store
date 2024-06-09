@@ -6,16 +6,18 @@ public class Products {
     private String productImageUrl;
     private int productQuantity;
     private String productDescription;
+    private String seller;
 
     public Products() {
     }
 
-    public Products(String productName, int productPrice, String productImageUrl, int productQuantity, String productDescription) {
+    public Products(String productName, int productPrice, String productImageUrl, int productQuantity, String productDescription, String seller) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productImageUrl = productImageUrl;
         this.productQuantity = productQuantity;
         this.productDescription = productDescription;
+        this.seller = seller;
     }
 
     public String getProductName() {
@@ -56,5 +58,13 @@ public class Products {
 
     public void setProductDescription(String productDescription) {
         this.productDescription = productDescription;
+    }
+
+    public String getSeller() {
+        return seller;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
     }
 }

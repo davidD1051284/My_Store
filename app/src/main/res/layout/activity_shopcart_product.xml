@@ -9,8 +9,8 @@
         android:id="@+id/iv_shopcart_image"
         android:layout_width="97dp"
         android:layout_height="86dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -41,7 +41,7 @@
         style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
         android:layout_width="29dp"
         android:layout_height="39dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="X"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_shopcart_product_name" />
@@ -49,10 +49,10 @@
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="37dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/btn_shopcart_delete"
-        tools:layout_editor_absoluteY="78dp">
+        app:layout_constraintTop_toBottomOf="@+id/btn_shopcart_delete">
 
         <Button
             android:id="@+id/btn_shopcart_decrease"

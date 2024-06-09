@@ -61,11 +61,12 @@ public class CartAdapter extends BaseAdapter {
         CartItem cartItem = cartItems.get(position);
 
         holder.tvProductName.setText(cartItem.getProductName());
-        holder.tvProductPrice.setText("NT$" + cartItem.getProductPrice() * cartItem.getProductAmount());
+        holder.tvProductPrice.setText("NT$" + cartItem.getProductPrice());
         holder.tvProductNum.setText(String.valueOf(cartItem.getProductAmount()));
 
-        Glide.with(context).load(cartItem.getProductImageUrl()).into(holder.ivProductImage);
+        Glide.with(context).load(cartItem.getProductImage()).into(holder.ivProductImage);
 
+        // 購買數量增加按鈕
         holder.btnIncrease.setOnClickListener(v -> {
             if (cartItem.getProductAmount() >= 9) {
                 return;
@@ -75,6 +76,7 @@ public class CartAdapter extends BaseAdapter {
             updateLumpSumListener.updateLumpSum();
         });
 
+        // 購買數量減少按鈕
         holder.btnDecrease.setOnClickListener(v -> {
             if (cartItem.getProductAmount() > 1) {
                 cartItem.setProductAmount(cartItem.getProductAmount() - 1);
@@ -83,6 +85,7 @@ public class CartAdapter extends BaseAdapter {
             }
         });
 
+        // 移出購物車按鈕
         holder.btnDelete.setOnClickListener(v -> {
             cartItems.remove(position);
             notifyDataSetChanged();
