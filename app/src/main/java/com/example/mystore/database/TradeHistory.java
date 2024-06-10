@@ -69,4 +69,9 @@ public class TradeHistory {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "商品名稱: " + productName + ", 總價: NT$" + totalPrice + ", 數量: " + quantity + ", 日期: " + tradeDate;
+    }
 }

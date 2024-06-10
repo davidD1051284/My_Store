@@ -14,8 +14,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mystore.LoginActivity;
 import com.example.mystore.TopUpActivity;
+import com.example.mystore.database.TradeHistory;
 import com.example.mystore.insert_product;
 import com.example.mystore.databinding.FragmentPersonInfoBinding;
+import com.example.mystore.ui.tradeHistory.TradeHistoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class PersonInfoFragment extends Fragment {
@@ -25,6 +27,7 @@ public class PersonInfoFragment extends Fragment {
     private Button btnSignOut;
     private Button btnTopUp;
     private Button btnLaunchedProduct;
+    private Button btnTradeHistory;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,15 @@ public class PersonInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), insert_product.class);
+                startActivity(intent);
+            }
+        });
+
+        btnTradeHistory = binding.btnTradeHistory;
+        btnTradeHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), TradeHistoryActivity.class);
                 startActivity(intent);
             }
         });
