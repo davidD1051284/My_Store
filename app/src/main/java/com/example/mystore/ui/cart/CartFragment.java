@@ -21,6 +21,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mystore.LoginActivity;
 import com.example.mystore.R;
+import com.example.mystore.database.TradeHistory;
+import com.example.mystore.database.TradeNotify;
 import com.example.mystore.database.UserInfos;
 import com.example.mystore.databinding.FragmentCartBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,6 +50,8 @@ public class CartFragment extends Fragment {
     private List<CartItem> cartItems;
     private DatabaseReference productReference;
     private DatabaseReference userReference;
+    private DatabaseReference tradeHistoryReference;
+    private DatabaseReference tradeNotifyReference;
     private String userEmail;
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
@@ -68,6 +73,8 @@ public class CartFragment extends Fragment {
 
         productReference = FirebaseDatabase.getInstance().getReference("products");
         userReference = FirebaseDatabase.getInstance().getReference("userInfos");
+        tradeHistoryReference = FirebaseDatabase.getInstance().getReference("tradeHistory");
+        tradeNotifyReference = FirebaseDatabase.getInstance().getReference("tradeNotify");
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -96,20 +103,27 @@ public class CartFragment extends Fragment {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
         cartItems.clear();
 
+        Set<String> productIds = sharedPreferences.getStringSet("productIds", new HashSet<>());
+
+        if (productIds.isEmpty()) {
+            return;
+        }
+
         // 顯示載入中視窗
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("載入中...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        Set<String> productIds = sharedPreferences.getStringSet("productIds", new HashSet<>());
-
         AtomicInteger itemCount = new AtomicInteger(productIds.size());
+        final boolean[] isTimeout = {false};
 
         for (String productId : productIds) {
             productReference.child(productId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (isTimeout[0]) return;
+
                     Log.d("FirebaseData", "DataSnapshot: " + snapshot.getValue());
                     CartItem cartItem = snapshot.getValue(CartItem.class);
                     if (cartItem != null) {
@@ -133,13 +147,22 @@ public class CartFragment extends Fragment {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     Log.e("FirebaseError", "DatabaseError: " + error.getMessage());
-                    // 隱藏載入中視窗
                     if (progressDialog.isShowing()) {
+                        Toast.makeText(getContext(), "載入失敗", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                 }
             });
         }
+
+        // 10秒超時
+        lvCartList.postDelayed(() -> {
+            if (itemCount.get() > 0 && progressDialog.isShowing()) {
+                isTimeout[0] = true;
+                progressDialog.dismiss();
+                Toast.makeText(getContext(), "載入超時", Toast.LENGTH_SHORT).show();
+            }
+        }, 10000);
     }
 
     private void updateLumpSum() {
@@ -197,10 +220,14 @@ public class CartFragment extends Fragment {
                                                                 // 更新並顯示餘額
                                                                 int newBalance = userBalance - totalBalance.get();
                                                                 updateUserBalance(userSnapshot.getKey(), newBalance);
-                                                                showTransactionSuccessDialog(newBalance);
+
+                                                                // 將交易記錄上傳至資料庫
+                                                                uploadTradeHistoryAndNotify();
 
                                                                 // 清空購物車
                                                                 clearCart();
+
+                                                                showTransactionSuccessDialog(newBalance);
                                                             }
                                                         }
 
@@ -268,6 +295,27 @@ public class CartFragment extends Fragment {
                 .setMessage("目前餘額 NT$" + newBalance)
                 .setPositiveButton("確定", (dialog, which) -> dialog.dismiss())
                 .show();
+    }
+
+    // 上傳交易記錄和通知
+    private void uploadTradeHistoryAndNotify() {
+        for (CartItem item : cartItems) {
+            TradeHistory tradeHistory = new TradeHistory(
+                    item.getSeller(),
+                    userEmail,
+                    new Date(),
+                    item.getProductName(),
+                    item.getProductPrice() * item.getProductAmount(),
+                    item.getProductAmount()
+            );
+            tradeHistoryReference.push().setValue(tradeHistory);
+
+            TradeNotify tradeNotify = new TradeNotify(
+                    item.getSeller(),
+                    item.getProductPrice() * item.getProductAmount()
+            );
+            tradeNotifyReference.push().setValue(tradeNotify);
+        }
     }
 
     public interface StockCallback {

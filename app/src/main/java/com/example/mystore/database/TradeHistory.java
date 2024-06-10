@@ -7,18 +7,18 @@ public class TradeHistory {
     private String buyer;
     private Date tradeDate;
     private String productName;
-    private int productPrice;
+    private int totalPrice;
     private int quantity;
 
     public TradeHistory() {
     }
 
-    public TradeHistory(String seller, String buyer, Date tradeDate, String productName, int productPrice, int quantity) {
+    public TradeHistory(String seller, String buyer, Date tradeDate, String productName, int totalPrice, int quantity) {
         this.seller = seller;
         this.buyer = buyer;
         this.tradeDate = tradeDate;
         this.productName = productName;
-        this.productPrice = productPrice;
+        this.totalPrice = totalPrice;
         this.quantity = quantity;
     }
 
@@ -54,12 +54,12 @@ public class TradeHistory {
         this.productName = productName;
     }
 
-    public int getProductPrice() {
-        return productPrice;
+    public int getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setProductPrice(int productPrice) {
-        this.productPrice = productPrice;
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getQuantity() {
