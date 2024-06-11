@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mystore.LoginActivity;
+import com.example.mystore.R;
 import com.example.mystore.databinding.FragmentHomeBinding;
+import com.example.mystore.ui.cart.CartItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HomeFragment extends Fragment {
@@ -31,7 +35,12 @@ public class HomeFragment extends Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference userReference;
     private DatabaseReference tradeNotifyReference;
+    private DatabaseReference productReference;
     private String userEmail;
+
+    private ListView productListView;
+    private ArrayList<HomeItem> productList;
+    private HomeAdapter productAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,10 +64,44 @@ public class HomeFragment extends Fragment {
 
         userReference = FirebaseDatabase.getInstance().getReference("userInfos");
         tradeNotifyReference = FirebaseDatabase.getInstance().getReference("tradeNotify");
+        productReference = FirebaseDatabase.getInstance().getReference("products");
 
+        productListView = binding.lvAllProducts;
+        productList = new ArrayList<>();
+        productAdapter = new HomeAdapter(getContext(), R.layout.home_product_layout, productList);
+        productListView.setAdapter(productAdapter);
+
+        loadProducts();
         processTradeNotifications();
 
         return root;
+    }
+
+    private void loadProducts() {
+        productReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                productList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String name = snapshot.child("productName").getValue(String.class);
+                    Long priceLong = snapshot.child("productPrice").getValue(Long.class);
+                    String imageUrl = snapshot.child("productImage").getValue(String.class);
+
+                    int price = (priceLong != null) ? priceLong.intValue() : 0;
+
+                    if (name != null && imageUrl != null) {
+                        HomeItem product = new HomeItem(name, price, imageUrl, 0, null);
+                        productList.add(product);
+                    }
+                }
+                productAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "無法載入商品", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void processTradeNotifications() {
