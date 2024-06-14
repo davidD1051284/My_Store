@@ -44,10 +44,10 @@
         android:id="@+id/search_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/round_btn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view3"
         app:layout_constraintTop_toTopOf="@+id/editTextText4"
         app:srcCompat="@drawable/search" />
 

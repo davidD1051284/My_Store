@@ -86,11 +86,15 @@ public class HomeFragment extends Fragment {
                     String name = snapshot.child("productName").getValue(String.class);
                     Long priceLong = snapshot.child("productPrice").getValue(Long.class);
                     String imageUrl = snapshot.child("productImage").getValue(String.class);
+                    String seller = snapshot.child("seller").getValue(String.class);
+                    Integer amount = snapshot.child("productAmount").getValue(Integer.class);
+                    String description = snapshot.child("productDescription").getValue(String.class);
+                    String id = snapshot.getKey();
 
                     int price = (priceLong != null) ? priceLong.intValue() : 0;
 
                     if (name != null && imageUrl != null) {
-                        HomeItem product = new HomeItem(name, price, imageUrl, 0, null);
+                        HomeItem product = new HomeItem(id, name, price, imageUrl, amount, description, seller);
                         productList.add(product);
                     }
                 }
