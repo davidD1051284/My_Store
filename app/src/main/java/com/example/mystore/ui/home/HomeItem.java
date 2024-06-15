@@ -54,6 +54,26 @@ public class HomeItem {
         this.imageUrl = imageUrl;
     }
 
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setProductPrice(int productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
     public void setProductQuantity(int productQuantity) {
         this.productQuantity = productQuantity;
     }

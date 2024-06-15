@@ -1,86 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductDetailsActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/sample_product_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="ASUS 華碩 ROG Zephyrus G14 2024 GA403 14吋筆電 R9/4060"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productImage" />
 
-        <ImageView
-            android:id="@+id/productImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/sample_product_img" />
-
-        <TextView
-            android:id="@+id/productName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ASUS 華碩 ROG Zephyrus G14 2024 GA403 14吋筆電 R9/4060"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productName"
+        app:layout_constraintVertical_bias="0.181">
 
         <TextView
             android:id="@+id/productDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="商品型號：GA403UV-0032H8945HS-NBLO｜鉑月銀\nGA403UV-0042E8945HS-NBLO｜日蝕灰\n產品保固：２年\n產品特色：\n搭載 AMD Ryzen™ 9 8945HS 處理器，輕鬆享受 Windows 11 Home 作業系統的 AI 筆電的遊戲和創造體驗\n最高支援 NVIDIA® GeForce RTX™ 4060 筆記型電腦 GPU，讓您高效順暢進行遊戲和創作\nROG 首款 3K OLED 120Hz/0.2ms Nebula 霓真技術電競螢幕，支援 VESA DisplayHDR True Black 500\n超薄 1.59 cm、1.5 kg、14 吋優質鋁製機殼\nROG 智慧散熱技術、Tri-fan 三風扇技術、液態金屬、改良散熱管和第 2 代 Arc Flow Fans™\n全新可自訂 Slash 動態燈效，盡顯個人態度"
             android:textSize="16sp" />
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/seeMore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="查看更多"
-            android:textColor="@android:color/holo_red_dark"
-            android:layout_marginTop="10dp" />
 
-        <LinearLayout
-            android:id="@+id/reviewsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/review1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="1\nNameAAAA\n評分: 10\n2023/10/31"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/review2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="2\nNameBBB\n評分: 9\n2023/10/31"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="評價001"
-        android:textSize="18sp" />
-
-    <LinearLayout
-        android:id="@+id/moreDetailsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="產品規格：\n作業系統：Windows 11 Home - ASUS 推薦商務用 Windows 11 Pro\n處理器：AMD Ryzen™ 9 8945HS Processor 4GHz\n顯示卡：NVIDIA® GeForce RTX™ 4060 顯示卡 8GB GDDR6\nNeural Processor：XDNA 16TOPs\n顯示器：14吋 3K (2880 x 1800) OLED 16:10 aspect ratio OLED 鏡面顯示器 DCI-P3 100% 120Hz 0.2ms\n記憶體：16GB*2 LPDDR5X 6400 on board\n最大容量：32GB *支援雙通道記憶體\n儲存空間：1TB PCIe® 4.0 NVMe™ M.2 SSD\nI/O 連接埠：\n1x 3.5mm 複合式音源線插孔\n1x HDMI 2.1 FRL\n2x USB 3.2 Gen 2 Type-A\n1x USB 3.2 Gen 2 Type-C 支援顯示器\n1x Type C USB 4 support DisplayPort™ / power delivery\n1x card reader (microSD) (UHS-II)\n鍵盤與觸控板：背光巧克力鍵盤、觸控板\n攝影機：1080P FHD IR Camera for Windows Hello\n音效技術：智慧放大技術、Dolby Atmos 杜比全景聲AI 降噪技術、Hi-Res 認證、內建 3 麥克風陣列、4-speaker (dual force woofer) system with Smart Amplifier Technology, 2 Tweeters\n網路與通訊：Wi-Fi 6E(802.11ax) (三頻) 2*2 + Bluetooth® 藍牙 5.3 無線網卡 (*Bluetooth® 藍牙版本可能依據系統而異)\n電池：73WHrs, 4S1P, 4-cell Li-ion\n電源：Rectangle Conn, 180W AC Adapter, Output: 19V DC, 9.23A, 180W, Input: 100~240V AC, 50/60Hz universal\n燈效設備：Slash 動態燈效\n重量：1.50 Kg ( lbs)\n尺寸：31.1 x 22.0 x 1.59 ~ 1.63 cm (12.24\  8.66\ 0.63\~ 0.64\)\n盒裝內附：ROG Zephyrus G14 Sleeve (2024)、ROG Impact 電競滑鼠"
-        android:textSize="16sp" />
-    </LinearLayout>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

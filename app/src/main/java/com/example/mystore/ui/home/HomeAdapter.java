@@ -23,6 +23,11 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
     private Context mContext;
     private int mResource;
 
+    TextView productName;
+    TextView productPrice;
+    ImageView productImage;
+    Button productMore;
+
 
     public HomeAdapter(@NonNull android.content.Context context, int resource, @NonNull List<HomeItem> objects) {
         super(context, resource, objects);
@@ -41,12 +46,12 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
-        TextView productName = convertView.findViewById(R.id.tv_home_product_name);
-        TextView productPrice = convertView.findViewById(R.id.tv_home_product_price);
-        ImageView productImage = convertView.findViewById(R.id.iv_home_product_image);
-        Button productMore = convertView.findViewById(R.id.btn_home_product_more);
+        productName = convertView.findViewById(R.id.tv_home_product_name);
+        productPrice = convertView.findViewById(R.id.tv_home_product_price);
+        productImage = convertView.findViewById(R.id.iv_home_product_image);
+        productMore = convertView.findViewById(R.id.btn_home_product_more);
 
-        productName.setText(name);
+        setProductName(name);
         productPrice.setText("NT$" + String.valueOf(price));
         Glide.with(mContext).load(imageUrl).into(productImage);
 
@@ -64,4 +69,15 @@ public class HomeAdapter extends ArrayAdapter<HomeItem> {
 
         return convertView;
     }
+
+    private void setProductName(String name) {
+        int maxLength = 30;
+        if (name.length() > maxLength) {
+            name = name.substring(0, maxLength) + "...";
+        }
+        productName.setText(name);
+    }
 }
+
+
+

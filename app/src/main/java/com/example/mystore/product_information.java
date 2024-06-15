@@ -3,6 +3,7 @@ package com.example.mystore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,18 +22,25 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.bumptech.glide.Glide;
 
+import com.example.mystore.ProductDetailsActivity;
+
 import java.util.HashSet;
 import java.util.Set;
 
 public class product_information extends AppCompatActivity {
 
     private static final String TAG = "pro_info";
+    private TextView productName;
     private ImageView productImage;
     private Button btnAddCart;
+    private Button btnCheckMore;
     private SharedPreferences sharedPreferences;
     private static final String CART_PREFS = "CartPrefs";
     private static final String CART_ITEMS_KEY = "productIds";
 
+    private String name;
+    private String description;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +49,10 @@ public class product_information extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(CART_PREFS, MODE_PRIVATE);
 
+        productName = findViewById(R.id.tv_product_information_name);
         productImage = findViewById(R.id.iv_product_information_image);
         btnAddCart = findViewById(R.id.btn_add_cart);
+        btnCheckMore = findViewById(R.id.btn_check_more);
 
 
         String product_id = getIntent().getStringExtra("PRODUCT_ID");
@@ -55,9 +65,18 @@ public class product_information extends AppCompatActivity {
                     Log.d(TAG, "DataSnapshot exists: " + dataSnapshot.toString());
                     HomeItem product = new HomeItem();
                     product.setImageUrl(dataSnapshot.child("productImage").getValue(String.class));
+                    product.setProductName(dataSnapshot.child("productName").getValue(String.class));
+                    product.setProductDescription(dataSnapshot.child("productDescription").getValue(String.class));
+
+                    name = product.getProductName();
+                    description = product.getProductDescription();
+                    url = product.getImageUrl();
+
                     if (product != null) {
                         String url = product.getImageUrl();
-                        Log.d(TAG, "Image URL: " + url);
+
+                        productName.setText(product.getProductName());
+                        //Log.d(TAG, "Image URL: " + url);
                         if (url != null && !url.isEmpty()) {
                             Glide.with(product_information.this).load(url).into(productImage);
                         } else {
@@ -79,6 +98,14 @@ public class product_information extends AppCompatActivity {
 
         btnAddCart.setOnClickListener(v -> {
             addProductToCart(product_id);
+        });
+
+        btnCheckMore.setOnClickListener(v -> {
+            Intent intent = new Intent(product_information.this, ProductDetailsActivity.class);
+            intent.putExtra("PRODUCT_NAME", name);
+            intent.putExtra("PRODUCT_DESCRIPTION", description);
+            intent.putExtra("PRODUCT_IMAGE", url);
+            startActivity(intent);
         });
     }
 

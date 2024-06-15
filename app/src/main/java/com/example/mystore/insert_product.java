@@ -100,6 +100,7 @@ public class insert_product extends AppCompatActivity {
             return;
         }
 
+        btnInsert.setEnabled(false);
         uploadToFirebase(productName, productPrice, productAmount, productDescription, productImageUri);
     }
 
@@ -119,9 +120,11 @@ public class insert_product extends AppCompatActivity {
                 saveProductToDataBase(productName, productPrice, productAmount, productDescription, imageUrl);
             })).addOnFailureListener(e -> {
                 Toast.makeText(insert_product.this, "Failed to upload image", Toast.LENGTH_LONG).show();
+                btnInsert.setEnabled(true);
             });
         } catch (IOException e) {
             e.printStackTrace();
+            btnInsert.setEnabled(true);
         }
     }
 
@@ -150,9 +153,11 @@ public class insert_product extends AppCompatActivity {
                 } else {
                     Toast.makeText(insert_product.this, "Failed to add product", Toast.LENGTH_SHORT);
                 }
+                btnInsert.setEnabled(true);
             });
         } else {
             Toast.makeText(insert_product.this, "User not logged in", Toast.LENGTH_SHORT).show();
+            btnInsert.setEnabled(true);
         }
     }
 
