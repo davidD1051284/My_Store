@@ -346,32 +346,4 @@ public class CartFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
-    // 測試用
-    private void saveAllProductIdsToPrefs() {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        productReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Set<String> productIds = new HashSet<>();
-                for (DataSnapshot productSnapshot : snapshot.getChildren()) {
-                    String productId = productSnapshot.getKey();
-                    if (productId != null) {
-                        productIds.add(productId);
-                    }
-                }
-
-                // 更新SharedPreferences
-                editor.putStringSet("productIds", productIds);
-                editor.apply();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
-            }
-        });
-    }
 }
