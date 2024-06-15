@@ -1,6 +1,7 @@
 package com.example.mystore.ui.cart;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.mystore.R;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CartAdapter extends BaseAdapter {
     private Context context;
     private List<CartItem> cartItems;
     private UpdateLumpSumListener updateLumpSumListener;
+    private static final String CART_PREFS = "CartPrefs";
+    private static final String CART_ITEMS_KEY = "productIds";
 
     public CartAdapter(Context context, List<CartItem> cartItems, UpdateLumpSumListener updateLumpSumListener) {
         this.context = context;
@@ -87,12 +92,24 @@ public class CartAdapter extends BaseAdapter {
 
         // 移出購物車按鈕
         holder.btnDelete.setOnClickListener(v -> {
+            removeFromCart(cartItem.getProductId());
             cartItems.remove(position);
             notifyDataSetChanged();
             updateLumpSumListener.updateLumpSum();
         });
 
         return convertView;
+    }
+
+    private void removeFromCart(String productId) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(CART_PREFS, Context.MODE_PRIVATE);
+        Set<String> cartItems = sharedPreferences.getStringSet(CART_ITEMS_KEY, new HashSet<>());
+        if (cartItems.contains(productId)) {
+            cartItems.remove(productId);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putStringSet(CART_ITEMS_KEY, cartItems);
+            editor.apply();
+        }
     }
 
     private static class ViewHolder {

@@ -89,8 +89,6 @@ public class CartFragment extends Fragment {
             return root;
         }
 
-        saveAllProductIdsToPrefs();
-
         loadCartItems();
         updateLumpSum();
 
