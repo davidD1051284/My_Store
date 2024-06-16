@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +33,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         tvProductName.setText(name);
         tvProductDetails.setText(fromHtml(description));
+        tvProductDetails.setMovementMethod(new ScrollingMovementMethod());
 
         if (url != null && !url.isEmpty()) {
             Glide.with(this).load(url).into(ivProductImage);
