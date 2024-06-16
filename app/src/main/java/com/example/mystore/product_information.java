@@ -42,6 +42,10 @@ public class product_information extends AppCompatActivity {
     private String description;
     private String url;
 
+    private Button back_to_list;
+    private Button view_command;
+    private Button write_command;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,7 @@ public class product_information extends AppCompatActivity {
         productImage = findViewById(R.id.iv_product_information_image);
         btnAddCart = findViewById(R.id.btn_add_cart);
         btnCheckMore = findViewById(R.id.btn_check_more);
+        view_command = findViewById(R.id.btn_all_comment);
 
 
         String product_id = getIntent().getStringExtra("PRODUCT_ID");
@@ -105,6 +110,23 @@ public class product_information extends AppCompatActivity {
             intent.putExtra("PRODUCT_NAME", name);
             intent.putExtra("PRODUCT_DESCRIPTION", description);
             intent.putExtra("PRODUCT_IMAGE", url);
+            startActivity(intent);
+        });
+
+        back_to_list.setOnClickListener(v -> {
+            Intent intent = new Intent(product_information.this, NavigationBarActivity.class);
+            startActivity(intent);
+        });
+
+        view_command.setOnClickListener(v -> {
+            Intent intent = new Intent(product_information.this, All_command.class);
+            intent.putExtra("PRODUCT_ID", product_id);
+            startActivity(intent);
+        });
+
+        write_command.setOnClickListener(v -> {
+            Intent intent = new Intent(product_information.this, write_command.class);
+            intent.putExtra("PRODUCT_ID", product_id);
             startActivity(intent);
         });
     }
