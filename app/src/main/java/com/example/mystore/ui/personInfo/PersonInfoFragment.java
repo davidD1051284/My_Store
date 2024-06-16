@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import com.example.mystore.insert_product;
 import com.example.mystore.databinding.FragmentPersonInfoBinding;
 import com.example.mystore.ui.tradeHistory.TradeHistoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class PersonInfoFragment extends Fragment {
 
@@ -28,6 +30,7 @@ public class PersonInfoFragment extends Fragment {
     private Button btnTopUp;
     private Button btnLaunchedProduct;
     private Button btnTradeHistory;
+    private TextView tvAccount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,20 @@ public class PersonInfoFragment extends Fragment {
         binding = FragmentPersonInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // 設置帳號名稱textView
+        tvAccount = binding.tvAccountPersonInfo;
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            tvAccount.setText(currentUser.getEmail());
+        } else {
+            Toast.makeText(getContext(), "用戶未登入", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+            return root;
+        }
+
+        // 登出
         btnSignOut = binding.btnSignOut;
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +72,7 @@ public class PersonInfoFragment extends Fragment {
             }
         });
 
+        // 儲值導向
         btnTopUp = binding.btnTopUp;
         btnTopUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +82,7 @@ public class PersonInfoFragment extends Fragment {
             }
         });
 
+        // 上架商品導向
         btnLaunchedProduct = binding.btnLaunchedProduct;
         btnLaunchedProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +92,7 @@ public class PersonInfoFragment extends Fragment {
             }
         });
 
+        // 交易紀錄導向
         btnTradeHistory = binding.btnTradeHistory;
         btnTradeHistory.setOnClickListener(new View.OnClickListener() {
             @Override
