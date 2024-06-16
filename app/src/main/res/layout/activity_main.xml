@@ -21,13 +21,13 @@
         android:layout_width="209dp"
         android:layout_height="60dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText4"
+        app:layout_constraintEnd_toEndOf="@+id/search_text"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextText4"
+        app:layout_constraintStart_toStartOf="@+id/search_text"
         tools:layout_editor_absoluteY="26dp" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/search_text"
         android:layout_width="210dp"
         android:layout_height="60dp"
         android:backgroundTint="#FFFFFF"

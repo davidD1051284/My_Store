@@ -19,81 +19,63 @@
         android:id="@+id/view3"
         android:layout_width="209dp"
         android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText4"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextText4"
-        tools:layout_editor_absoluteY="26dp" />
+        app:layout_constraintStart_toEndOf="@+id/my_inform_btn"
+        app:layout_constraintTop_toTopOf="@+id/view2" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/search_text"
         android:layout_width="210dp"
         android:layout_height="60dp"
+        android:layout_marginStart="16dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:hint="搜尋"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintStart_toEndOf="@+id/my_inform_btn"
         app:layout_constraintTop_toTopOf="@+id/view3"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="123dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/search_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/round_btn"
-        app:srcCompat="@drawable/search"
-        tools:layout_editor_absoluteX="342dp"
-        tools:layout_editor_absoluteY="26dp" />
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/view3"
+        app:layout_constraintTop_toTopOf="@+id/view3"
+        app:srcCompat="@drawable/search" />
 
     <ImageButton
         android:id="@+id/my_inform_btn"
         android:layout_width="85dp"
         android:layout_height="85dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/my_inform_background"
-        app:srcCompat="@drawable/human"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="8dp" />
-
-    <ImageView
-        android:id="@+id/product_img"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
-        app:srcCompat="@drawable/ic_launcher_background" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/product_img"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view2"
+        app:srcCompat="@drawable/human" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/view2">
 
         <RadioGroup
+            android:id="@+id/rating_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -146,9 +128,9 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/comment_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="198dp"
-            android:hint="hint" />
+            android:layout_height="198dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
