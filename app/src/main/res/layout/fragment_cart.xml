@@ -42,7 +42,7 @@
         android:layout_marginEnd="24dp"
         android:layout_weight="1"
         android:backgroundTint="#18A661"
-        android:text="前往結帳"
+        android:text="@string/btn_pay"
         app:layout_constraintEnd_toEndOf="@+id/view4"
         app:layout_constraintTop_toTopOf="@+id/view4" />
 
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
-        android:text="總金額 NT$"
+        android:text="@string/total_cart_price"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="購物車"
+        android:text="@string/title_cart"
         android:textColor="#000000"
         android:textSize="34sp"
         android:textStyle="bold"

@@ -14,7 +14,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="64dp"
         android:backgroundTint="#18A661"
-        android:text="儲值"
+        android:text="@string/btn_top_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sp_payment_method" />
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="儲值"
+        android:text="@string/title_top_up"
         android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="選擇金額"
+        android:text="@string/tv_select_pay_balance"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view5" />
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="選擇支付方式"
+        android:text="@string/tv_select_pay_method"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="@+id/tv_select_pay_balance"
         app:layout_constraintTop_toBottomOf="@+id/sp_money" />

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<resources>
+    <string name="app_name">My Store</string>
+    <string name="title_activity_person_info">Person Info</string>
+    <string name="title_home">Home</string>
+    <string name="title_cart">Cart</string>
+    <string name="title_top_up">Top Up</string>
+    <string name="tv_select_pay_balance">Select Pay Balance</string>
+    <string name="tv_select_pay_method">Select Pay Method</string>
+
+    <string name="title_person_info">PersonInfo</string>
+    <string name="product_details">Product Details</string>
+    <string name="detailed_product_info">Detailed Product Info</string>
+
+    <string name="language_choose_title">Choose Language</string>
+    <string name="btn_zh_choose">Chinese</string>
+    <string name="btn_en_choose">English</string>
+
+    <string name="btn_language">Language</string>
+    <string name="btn_top_up">Top Up</string>
+    <string name="btn_trade_history">Trade History</string>
+    <string name="btn_launched_product">Launch Product</string>
+    <string name="btn_sign_out">Log Out</string>
+
+    <string name="btn_home_product_more">Check More</string>
+    <string name="btn_pay">Pay</string>
+    <string name="total_cart_price">Total Price NT$</string>
+
+    <string name="tv_register_email">Email</string>
+    <string name="tv_register_password">Password</string>
+    <string name="tv_register_confirm_password">Confirm Password</string>
+    <string name="btn_register">Register</string>
+
+    <string name="btn_check_more">Check More</string>
+    <string name="btn_add_cart">Add Cart</string>
+
+    <string name="btn_back">Back</string>
+    <string name="btn_all_command">All Command</string>
+    <string name="btn_write_command">Write Command</string>
+
+    <string name="tv_search">Search</string>
+
+    <string name="tv_login_account">Account</string>
+    <string name="tv_login_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_go_register">Go register</string>
+</resources>

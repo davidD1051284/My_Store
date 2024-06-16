@@ -4,16 +4,16 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="首頁" />
+        android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_cart"
         android:icon="@drawable/ic_cart_black_24dp"
-        android:title="購物車" />
+        android:title="@string/title_cart" />
 
     <item
         android:id="@+id/navigation_person_info"
         android:icon="@drawable/ic_person_info_black_24dp"
-        android:title="個人資料" />
+        android:title="@string/title_activity_person_info" />
 
 </menu>

@@ -43,7 +43,7 @@
         android:id="@+id/btn_home_product_more"
         android:layout_width="106dp"
         android:layout_height="52dp"
-        android:text="查看詳情"
+        android:text="@string/btn_home_product_more"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/iv_home_product_image"

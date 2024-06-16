@@ -3,7 +3,11 @@ package com.example.mystore;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +17,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etAccount;
@@ -25,6 +31,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 获取保存的语言设置
+        String languageCode = LanguageUtils.getSavedLanguage(this);
+
+        // 应用设置的语言，加载对应的资源
+        Locale locale = new Locale(languageCode);
+        Configuration configuration = getResources().getConfiguration();
+        configuration.setLocale(locale);
+        Resources resources = getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        resources.updateConfiguration(configuration, displayMetrics);
+
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();

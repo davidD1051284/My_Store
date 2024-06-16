@@ -33,7 +33,7 @@
         android:layout_marginStart="16dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="搜尋"
+        android:hint="@string/tv_search"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="@+id/view3"
         app:layout_constraintStart_toEndOf="@+id/my_inform_btn"

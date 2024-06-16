@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.mystore.LanguageUtils;
 import com.example.mystore.LoginActivity;
 import com.example.mystore.R;
 import com.example.mystore.databinding.FragmentHomeBinding;

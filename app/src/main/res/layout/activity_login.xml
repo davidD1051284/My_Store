@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="MyStore"
+        android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="@+id/iv_shopcart_image"
         app:layout_constraintStart_toStartOf="@+id/iv_shopcart_image"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="帳號"
+        android:text="@string/tv_login_account"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_app_name_login" />
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="密碼"
+        android:text="@string/tv_login_password"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -84,7 +84,7 @@
         android:minHeight="0dp"
         android:paddingStart="0dp"
         android:paddingEnd="0dp"
-        android:text="建立帳戶"
+        android:text="@string/btn_go_register"
         android:textColor="@android:color/holo_blue_light"
         app:layout_constraintEnd_toEndOf="@+id/et_password_register"
         app:layout_constraintTop_toBottomOf="@+id/et_password_register" />
@@ -97,7 +97,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
         android:backgroundTint="#18A661"
-        android:text="登入"
+        android:text="@string/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_create_account" />

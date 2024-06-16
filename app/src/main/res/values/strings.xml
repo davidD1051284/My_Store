@@ -1,9 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Store</string>
-    <string name="title_activity_person_info">PersonInfoActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_cart">Cart</string>
-    <string name="title_person_info">PersonInfo</string>
-    <string name="product_details">Product Details</string>
-    <string name="detailed_product_info">Detailed Product Info</string>
+    <string name="app_name">商城app</string>
+    <string name="title_activity_person_info">個人資訊</string>
+    <string name="title_home">首頁</string>
+    <string name="title_cart">購物車</string>
+    <string name="title_top_up">儲值</string>
+    <string name="tv_select_pay_balance">選擇金額</string>
+    <string name="tv_select_pay_method">選擇方式</string>
+
+    <string name="title_person_info">個人資訊</string>
+    <string name="product_details">商品資訊</string>
+    <string name="detailed_product_info">商品細節</string>
+
+    <string name="language_choose_title">選擇語言</string>
+    <string name="btn_zh_choose">中文</string>
+    <string name="btn_en_choose">英文</string>
+
+    <string name="btn_language">語言</string>
+    <string name="btn_top_up">儲值</string>
+    <string name="btn_trade_history">交易紀錄</string>
+    <string name="btn_launched_product">上架商品</string>
+    <string name="btn_sign_out">登出</string>
+
+
+    <string name="btn_home_product_more">查看詳情</string>
+    <string name="btn_pay">前往結帳</string>
+    <string name="total_cart_price">總金額 NT$</string>
+
+    <string name="tv_register_email">電子郵件</string>
+    <string name="tv_register_password">密碼</string>
+    <string name="tv_register_confirm_password">確認密碼</string>
+    <string name="btn_register">註冊</string>
+
+    <string name="btn_check_more">查看更多</string>
+    <string name="btn_add_cart">加入購物車</string>
+
+    <string name="btn_back">返回</string>
+    <string name="btn_all_command">所有評論</string>
+    <string name="btn_write_command">寫評論</string>
+
+    <string name="tv_search">搜尋</string>
+
+    <string name="tv_login_account">帳號</string>
+    <string name="tv_login_password">密碼</string>
+    <string name="btn_login">登入</string>
+    <string name="btn_go_register">建立帳戶</string>
 </resources>

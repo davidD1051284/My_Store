@@ -33,7 +33,7 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="搜尋"
+        android:hint="@string/tv_search"
         android:inputType="text"
         app:layout_constraintStart_toEndOf="@+id/my_inform_btn"
         app:layout_constraintTop_toTopOf="@+id/my_inform_btn" />
@@ -80,7 +80,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="#18A661"
-        android:text="加入購物車"
+        android:text="@string/btn_add_cart"
         app:layout_constraintEnd_toEndOf="@+id/product_inform"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/product_inform"
@@ -94,19 +94,21 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="#18A661"
-        android:text="查看更多"
+        android:text="@string/btn_check_more"
         app:layout_constraintEnd_toEndOf="@+id/product_inform"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/product_inform"
         app:layout_constraintTop_toBottomOf="@+id/tv_product_information_name" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="0dp"
-        android:layout_height="47dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,26 +118,36 @@
             android:id="@+id/BacktoList_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:backgroundTint="#18A661"
-            android:text="返回" />
+            android:minWidth="90dp"
+            android:text="@string/btn_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_pay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:backgroundTint="#18A661"
-            android:text="所有評論" />
+            android:maxWidth="120dp"
+            android:text="@string/btn_all_command"
+            app:layout_constraintEnd_toStartOf="@+id/write_comment_btn"
+            app:layout_constraintStart_toEndOf="@+id/BacktoList_btn"
+            app:layout_constraintTop_toTopOf="@+id/BacktoList_btn" />
 
         <Button
             android:id="@+id/write_comment_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:backgroundTint="#18A661"
-            android:text="寫評論" />
-    </LinearLayout>
+            android:maxWidth="120dp"
+            android:text="@string/btn_write_command"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_pay"
+            app:layout_constraintTop_toTopOf="@+id/btn_pay" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/iv_product_information_image"
