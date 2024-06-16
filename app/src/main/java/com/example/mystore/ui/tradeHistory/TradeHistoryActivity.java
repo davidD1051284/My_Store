@@ -47,8 +47,6 @@ public class TradeHistoryActivity extends AppCompatActivity {
         lvTradeHistory = findViewById(R.id.lv_trade_history);
 
         tradeHistoryList = new ArrayList<>();
-        tradeHistoryAdapter = new TradeHistoryAdapter(this, tradeHistoryList);
-        lvTradeHistory.setAdapter(tradeHistoryAdapter);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -77,7 +75,7 @@ public class TradeHistoryActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
                 // Default selection
                 selectTradeType = "購買紀錄";
-                loadPurchaseHistory(); // Load purchase history by default
+                loadPurchaseHistory();
             }
         });
     }
@@ -94,6 +92,8 @@ public class TradeHistoryActivity extends AppCompatActivity {
                         tradeHistoryList.add(tradeHistory);
                     }
                 }
+                tradeHistoryAdapter = new TradeHistoryAdapter(TradeHistoryActivity.this, tradeHistoryList, true);
+                lvTradeHistory.setAdapter(tradeHistoryAdapter);
                 tradeHistoryAdapter.notifyDataSetChanged();
             }
 
@@ -116,6 +116,8 @@ public class TradeHistoryActivity extends AppCompatActivity {
                         tradeHistoryList.add(tradeHistory);
                     }
                 }
+                tradeHistoryAdapter = new TradeHistoryAdapter(TradeHistoryActivity.this, tradeHistoryList, false);
+                lvTradeHistory.setAdapter(tradeHistoryAdapter);
                 tradeHistoryAdapter.notifyDataSetChanged();
             }
 
