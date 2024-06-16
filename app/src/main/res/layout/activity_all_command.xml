@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".All_command">
 
+    <Button
+        android:id="@+id/write_command_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#18A661"
+        android:text="寫評論"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.896"
+        app:layout_constraintStart_toEndOf="@+id/BacktoInform_btn"
+        app:layout_constraintTop_toBottomOf="@+id/listView2" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="0dp"
@@ -19,42 +31,46 @@
         android:id="@+id/view3"
         android:layout_width="209dp"
         android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/search_text"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/search_text"
-        tools:layout_editor_absoluteY="26dp" />
+        app:layout_constraintStart_toEndOf="@+id/my_inform_btn"
+        app:layout_constraintTop_toTopOf="@+id/my_inform_btn" />
 
     <EditText
         android:id="@+id/search_text"
         android:layout_width="210dp"
         android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:hint="搜尋"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/view3"
-        app:layout_constraintTop_toTopOf="@+id/view3"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="123dp" />
+        app:layout_constraintStart_toEndOf="@+id/my_inform_btn"
+        app:layout_constraintTop_toTopOf="@+id/my_inform_btn" />
 
     <ImageButton
         android:id="@+id/search_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/round_btn"
-        app:srcCompat="@drawable/search"
-        tools:layout_editor_absoluteX="342dp"
-        tools:layout_editor_absoluteY="26dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view3"
+        app:layout_constraintTop_toTopOf="@+id/view3"
+        app:srcCompat="@drawable/search" />
 
     <ImageButton
         android:id="@+id/my_inform_btn"
         android:layout_width="85dp"
         android:layout_height="85dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/my_inform_background"
-        app:srcCompat="@drawable/human"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="8dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view2"
+        app:srcCompat="@drawable/human" />
 
     <ListView
         android:id="@+id/listView2"
@@ -85,21 +101,11 @@
         android:id="@+id/BacktoInform_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="#18A661"
         android:text="返回"
-        app:layout_constraintEnd_toStartOf="@+id/write_command_btn"
-        app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listView2" />
 
-    <Button
-        android:id="@+id/write_command_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:backgroundTint="#18A661"
-        android:text="寫評論"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="658dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
