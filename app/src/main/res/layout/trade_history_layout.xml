@@ -31,7 +31,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/tv_product_name_th"
-        app:layout_constraintTop_toBottomOf="@+id/tv_product_name_th" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_seller_th" />
 
     <TextView
         android:id="@+id/tv_total_price_th"
@@ -63,13 +63,12 @@
         android:id="@+id/tv_seller_th"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:maxLines="1"
         android:text="賣家: seller@gmail.com"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_product_name_th"
-        app:layout_constraintStart_toEndOf="@+id/tv_product_name_th"
-        app:layout_constraintTop_toTopOf="@+id/tv_product_name_th" />
+        app:layout_constraintStart_toStartOf="@+id/tv_product_name_th"
+        app:layout_constraintTop_toBottomOf="@+id/tv_product_name_th" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
