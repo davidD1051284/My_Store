@@ -52,12 +52,6 @@ public class PersonInfoFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             tvAccount.setText(currentUser.getEmail());
-        } else {
-            Toast.makeText(getContext(), "用戶未登入", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-            return root;
         }
 
         // 登出

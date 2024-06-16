@@ -54,12 +54,6 @@ public class HomeFragment extends Fragment {
 
         if (currentUser != null) {
             userEmail = currentUser.getEmail();
-        } else {
-            Toast.makeText(getContext(), "用戶未登入", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-            return root;
         }
 
         userReference = FirebaseDatabase.getInstance().getReference("userInfos");
