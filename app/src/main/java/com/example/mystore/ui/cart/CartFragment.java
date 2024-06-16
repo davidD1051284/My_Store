@@ -55,6 +55,8 @@ public class CartFragment extends Fragment {
     private String userEmail;
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
+    private static final String CART_PREFS = "CartPrefs";
+    private static final String CART_ITEMS_KEY = "productIds";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -81,12 +83,6 @@ public class CartFragment extends Fragment {
 
         if (currentUser != null) {
             userEmail = currentUser.getEmail();
-        } else {
-            Toast.makeText(getContext(), "用戶未登入", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-            return root;
         }
 
         loadCartItems();
@@ -98,10 +94,10 @@ public class CartFragment extends Fragment {
     }
 
     private void loadCartItems() {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(CART_PREFS, Context.MODE_PRIVATE);
         cartItems.clear();
 
-        Set<String> productIds = sharedPreferences.getStringSet("productIds", new HashSet<>());
+        Set<String> productIds = sharedPreferences.getStringSet(CART_ITEMS_KEY, new HashSet<>());
 
         if (productIds.isEmpty()) {
             return;
@@ -278,7 +274,7 @@ public class CartFragment extends Fragment {
 
     // 清空購物車
     private void clearCart() {
-        SharedPreferences.Editor editor = getContext().getSharedPreferences("CartPrefs", Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getContext().getSharedPreferences(CART_PREFS, Context.MODE_PRIVATE).edit();
         editor.clear();
         editor.apply();
         cartItems.clear();

@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mystore.LanguageSetActivity;
 import com.example.mystore.LoginActivity;
 import com.example.mystore.TopUpActivity;
 import com.example.mystore.database.TradeHistory;
@@ -29,7 +28,6 @@ public class PersonInfoFragment extends Fragment {
     private Button btnTopUp;
     private Button btnLaunchedProduct;
     private Button btnTradeHistory;
-    private Button btnLanguage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,16 +81,6 @@ public class PersonInfoFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-        btnLanguage = binding.btnLanguage;
-        btnLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LanguageSetActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         return root;
     }

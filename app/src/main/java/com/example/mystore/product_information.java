@@ -54,7 +54,6 @@ public class product_information extends AppCompatActivity {
         btnAddCart = findViewById(R.id.btn_add_cart);
         btnCheckMore = findViewById(R.id.btn_check_more);
 
-
         String product_id = getIntent().getStringExtra("PRODUCT_ID");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("products").child(product_id);
 
@@ -76,23 +75,28 @@ public class product_information extends AppCompatActivity {
                         String url = product.getImageUrl();
 
                         productName.setText(product.getProductName());
-                        //Log.d(TAG, "Image URL: " + url);
-                        if (url != null && !url.isEmpty()) {
-                            Glide.with(product_information.this).load(url).into(productImage);
+
+                        // 檢查Activity是否被銷毀
+                        if (!product_information.this.isDestroyed()) {
+                            if (url != null && !url.isEmpty()) {
+                                Glide.with(product_information.this).load(url).into(productImage);
+                            } else {
+                                Log.w(TAG, "Image URL is null or empty");
+                            }
                         } else {
-                            Log.w(TAG, "Image URL is null or empty");
+                            Log.w(TAG, "Activity is destroyed, not loading image");
                         }
                     } else {
                         Log.w(TAG, "Product is null");
                     }
                 } else {
-                    Log.w(TAG, "DataSnapshot does not exists");
+                    Log.w(TAG, "DataSnapshot does not exist");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, "DatabaseError: " + error.getMessage());
             }
         });
 
