@@ -21,11 +21,13 @@ public class TradeHistoryAdapter extends ArrayAdapter<TradeHistory> {
 
     private Context context;
     private List<TradeHistory> tradeHistoryList;
+    private boolean isSalesHistory;
 
-    public TradeHistoryAdapter(Context context, List<TradeHistory> tradeHistoryList) {
+    public TradeHistoryAdapter(Context context, List<TradeHistory> tradeHistoryList, boolean isSalesHistory) {
         super(context, 0, tradeHistoryList);
         this.context = context;
         this.tradeHistoryList = tradeHistoryList;
+        this.isSalesHistory = isSalesHistory;
     }
 
     @NonNull
@@ -52,8 +54,12 @@ public class TradeHistoryAdapter extends ArrayAdapter<TradeHistory> {
         String formattedDate = sdf.format(tradeHistory.getTradeDate());
         dateTextView.setText(formattedDate);
 
-        TextView sellerTextView = listItemView.findViewById(R.id.tv_seller_th);
-        sellerTextView.setText(String.format("賣家: %s", tradeHistory.getSeller()));
+        TextView userTextView = listItemView.findViewById(R.id.tv_seller_th);
+        if (isSalesHistory) {
+            userTextView.setText(String.format("買家: %s", tradeHistory.getBuyer()));
+        } else {
+            userTextView.setText(String.format("賣家: %s", tradeHistory.getSeller()));
+        }
 
         return listItemView;
     }
