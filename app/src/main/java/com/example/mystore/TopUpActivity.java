@@ -1,21 +1,20 @@
 package com.example.mystore;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mystore.database.UserInfos;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,11 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class TopUpActivity extends AppCompatActivity {
     private Spinner spMoney;
@@ -38,8 +32,6 @@ public class TopUpActivity extends AppCompatActivity {
     private int selectMoney;
     private String selectPaymentMethod;
     private FirebaseAuth mAuth;
-    private TextView tvTest;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +48,7 @@ public class TopUpActivity extends AppCompatActivity {
         ArrayAdapter<String> spMoneyAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, money);
         spMoneyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spMoney.setAdapter(spMoneyAdapter);
-        AdapterView.OnItemSelectedListener spMoneyListener = new AdapterView.OnItemSelectedListener() {
+        spMoney.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectMoney = Integer.parseInt(money[i]);
@@ -66,14 +58,13 @@ public class TopUpActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
                 selectMoney = 0;
             }
-        };
-        spMoney.setOnItemSelectedListener(spMoneyListener);
+        });
 
         // 支付方式選擇 spinner
         ArrayAdapter<String> spPayMethodAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, paymentMethods);
         spPayMethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPaymentMethod.setAdapter(spPayMethodAdapter);
-        AdapterView.OnItemSelectedListener spPayMethodListener = new AdapterView.OnItemSelectedListener() {
+        spPaymentMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectPaymentMethod = paymentMethods[i];
@@ -83,19 +74,14 @@ public class TopUpActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
                 selectPaymentMethod = "未選擇";
             }
-        };
-        spPaymentMethod.setOnItemSelectedListener(spPayMethodListener);
+        });
 
         // 確定儲值 button
-        View.OnClickListener btnTopUpListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!selectPaymentMethod.equals("未選擇")) {
-                    topUpBalance(selectMoney);
-                }
+        btnTopUp.setOnClickListener(view -> {
+            if (!selectPaymentMethod.equals("未選擇")) {
+                topUpBalance(selectMoney);
             }
-        };
-        btnTopUp.setOnClickListener(btnTopUpListener);
+        });
     }
 
     private void topUpBalance(int money) {
@@ -123,7 +109,7 @@ public class TopUpActivity extends AppCompatActivity {
                             int newBalance = userInfo.getBalance() + money;
                             userSnapshot.getRef().child("balance").setValue(newBalance)
                                     .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(TopUpActivity.this, "儲值成功", Toast.LENGTH_SHORT).show();
+                                        showSuccessDialog(newBalance);
                                     })
                                     .addOnFailureListener(e -> {
                                         Toast.makeText(TopUpActivity.this, "儲值失敗", Toast.LENGTH_SHORT).show();
@@ -136,7 +122,7 @@ public class TopUpActivity extends AppCompatActivity {
                     UserInfos newUser = new UserInfos(userEmail, money);
                     ref.child(userId).setValue(newUser)
                             .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(TopUpActivity.this, "儲值成功", Toast.LENGTH_SHORT).show();
+                                showSuccessDialog(money);
                             })
                             .addOnFailureListener(e -> {
                                 Toast.makeText(TopUpActivity.this, "儲值失敗", Toast.LENGTH_SHORT).show();
@@ -151,4 +137,15 @@ public class TopUpActivity extends AppCompatActivity {
         });
     }
 
+    private void showSuccessDialog(int balance) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TopUpActivity.this);
+        builder.setTitle("儲值成功")
+                .setMessage("目前餘額：" + balance + "元")
+                .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
 }
