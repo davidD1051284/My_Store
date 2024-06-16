@@ -33,7 +33,7 @@
 
     <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -49,6 +49,7 @@
             android:id="@+id/productDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="vertical"
             android:text="商品型號：GA403UV-0032H8945HS-NBLO｜鉑月銀\nGA403UV-0042E8945HS-NBLO｜日蝕灰\n產品保固：２年\n產品特色：\n搭載 AMD Ryzen™ 9 8945HS 處理器，輕鬆享受 Windows 11 Home 作業系統的 AI 筆電的遊戲和創造體驗\n最高支援 NVIDIA® GeForce RTX™ 4060 筆記型電腦 GPU，讓您高效順暢進行遊戲和創作\nROG 首款 3K OLED 120Hz/0.2ms Nebula 霓真技術電競螢幕，支援 VESA DisplayHDR True Black 500\n超薄 1.59 cm、1.5 kg、14 吋優質鋁製機殼\nROG 智慧散熱技術、Tri-fan 三風扇技術、液態金屬、改良散熱管和第 2 代 Arc Flow Fans™\n全新可自訂 Slash 動態燈效，盡顯個人態度"
             android:textSize="16sp" />
     </ScrollView>
