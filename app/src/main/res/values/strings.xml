@@ -45,4 +45,19 @@
     <string name="tv_login_password">密碼</string>
     <string name="btn_login">登入</string>
     <string name="btn_go_register">建立帳戶</string>
+
+    <string name="title_trade_history">交易紀錄</string>
+
+    <string name="title_insert_product">商品上架</string>
+    <string name="tv_product_name">商品名稱</string>
+    <string name="tv_product_price">商品價格</string>
+    <string name="tv_product_amount">商品庫存</string>
+    <string name="tv_product_description">商品描述</string>
+    <string name="btn_select_image">選擇圖片</string>
+    <string name="btn_insert_product">上架商品</string>
+
+    <string name="hint_product_name">名稱</string>
+    <string name="hint_product_price">價格</string>
+    <string name="hint_product_amount">庫存</string>
+    <string name="hint_product_description">描述</string>
 </resources>

@@ -44,4 +44,19 @@
     <string name="tv_login_password">Password</string>
     <string name="btn_login">Login</string>
     <string name="btn_go_register">Go register</string>
+
+    <string name="title_trade_history">Trade History</string>
+
+    <string name="title_insert_product">Insert Product</string>
+    <string name="tv_product_name">Product Name</string>
+    <string name="tv_product_price">Product Price</string>
+    <string name="tv_product_amount">Product Amount</string>
+    <string name="tv_product_description">Product Description</string>
+    <string name="btn_select_image">Select Image</string>
+    <string name="btn_insert_product">Insert Product</string>
+
+    <string name="hint_product_name">Name</string>
+    <string name="hint_product_price">Price</string>
+    <string name="hint_product_amount">Amount</string>
+    <string name="hint_product_description">Description</string>
 </resources>
