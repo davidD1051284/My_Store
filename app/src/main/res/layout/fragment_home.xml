@@ -15,30 +15,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/view3"
-        android:layout_width="209dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText4"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextText4"
-        app:layout_constraintTop_toTopOf="@+id/my_inform_btn" />
-
     <EditText
-        android:id="@+id/editTextText4"
-        android:layout_width="210dp"
+        android:id="@+id/et_search_home"
+        android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#FFFFFF"
         android:hint="@string/tv_search"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintBottom_toBottomOf="@+id/my_inform_btn"
+        app:layout_constraintEnd_toStartOf="@+id/search_btn"
         app:layout_constraintStart_toEndOf="@+id/my_inform_btn"
-        app:layout_constraintTop_toTopOf="@+id/my_inform_btn"
-        app:layout_constraintVertical_bias="0.615" />
+        app:layout_constraintTop_toTopOf="@+id/my_inform_btn" />
 
     <ImageButton
         android:id="@+id/search_btn"
@@ -47,8 +36,9 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/round_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view3"
-        app:layout_constraintTop_toTopOf="@+id/editTextText4"
+        app:layout_constraintStart_toEndOf="@+id/et_search_home"
+        app:layout_constraintTop_toTopOf="@+id/et_search_home"
+        app:layout_constraintBottom_toBottomOf="@+id/et_search_home"
         app:srcCompat="@drawable/search" />
 
     <ImageButton
@@ -68,7 +58,6 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

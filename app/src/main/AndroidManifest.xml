@@ -54,9 +54,6 @@
             android:name=".product_information"
             android:exported="false" />
         <activity
-            android:name=".search"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity

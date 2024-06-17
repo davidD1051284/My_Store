@@ -21,7 +21,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.search_activity);
 
         searchInput = findViewById(R.id.searchInput);
         searchResultsRecyclerView = findViewById(R.id.searchResultsRecyclerView);

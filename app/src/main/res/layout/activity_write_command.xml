@@ -15,52 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/view3"
-        android:layout_width="209dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/my_inform_btn"
-        app:layout_constraintTop_toTopOf="@+id/view2" />
-
-    <EditText
-        android:id="@+id/search_text"
-        android:layout_width="210dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:hint="搜尋"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/view3"
-        app:layout_constraintStart_toEndOf="@+id/my_inform_btn"
-        app:layout_constraintTop_toTopOf="@+id/view3"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/search_btn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/round_btn"
-        app:layout_constraintEnd_toEndOf="@+id/view2"
-        app:layout_constraintStart_toEndOf="@+id/view3"
-        app:layout_constraintTop_toTopOf="@+id/view3"
-        app:srcCompat="@drawable/search" />
-
-    <ImageButton
-        android:id="@+id/my_inform_btn"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/my_inform_background"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2"
-        app:srcCompat="@drawable/human" />
-
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
@@ -134,23 +88,25 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/BacktoInform02_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="40dp"
-        android:text="返回"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
-
-    <Button
         android:id="@+id/release_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="發布"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.875"
-        app:layout_constraintStart_toEndOf="@+id/BacktoInform02_btn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+    <TextView
+        android:id="@+id/tv_write_command_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/title_write_command"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

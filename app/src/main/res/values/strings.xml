@@ -60,4 +60,6 @@
     <string name="hint_product_price">價格</string>
     <string name="hint_product_amount">庫存</string>
     <string name="hint_product_description">描述</string>
+
+    <string name="title_write_command">寫評論</string>
 </resources>

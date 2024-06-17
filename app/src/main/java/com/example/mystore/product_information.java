@@ -41,8 +41,6 @@ public class product_information extends AppCompatActivity {
     private String name;
     private String description;
     private String url;
-
-    private Button back_to_list;
     private Button view_command;
     private Button write_command;
 
@@ -58,6 +56,7 @@ public class product_information extends AppCompatActivity {
         btnAddCart = findViewById(R.id.btn_add_cart);
         btnCheckMore = findViewById(R.id.btn_check_more);
         view_command = findViewById(R.id.btn_all_comment);
+        write_command = findViewById(R.id.btn_write_comment);
 
 
         String product_id = getIntent().getStringExtra("PRODUCT_ID");
@@ -115,11 +114,6 @@ public class product_information extends AppCompatActivity {
             intent.putExtra("PRODUCT_NAME", name);
             intent.putExtra("PRODUCT_DESCRIPTION", description);
             intent.putExtra("PRODUCT_IMAGE", url);
-            startActivity(intent);
-        });
-
-        back_to_list.setOnClickListener(v -> {
-            Intent intent = new Intent(product_information.this, NavigationBarActivity.class);
             startActivity(intent);
         });
 

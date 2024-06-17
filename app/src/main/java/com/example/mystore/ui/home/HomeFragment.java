@@ -1,12 +1,14 @@
 package com.example.mystore.ui.home;
 
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -14,11 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mystore.LanguageUtils;
-import com.example.mystore.LoginActivity;
 import com.example.mystore.R;
 import com.example.mystore.databinding.FragmentHomeBinding;
-import com.example.mystore.ui.cart.CartItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +41,7 @@ public class HomeFragment extends Fragment {
     private ListView productListView;
     private ArrayList<HomeItem> productList;
     private HomeAdapter productAdapter;
+    private EditText etSearchInput;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +57,24 @@ public class HomeFragment extends Fragment {
             userEmail = currentUser.getEmail();
         }
 
+        // 搜尋
+        etSearchInput = binding.etSearchHome;
+
+        // 監聽etSearch 有變動就搜尋
+        etSearchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String query = s.toString().trim();
+                loadProducts(query);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         userReference = FirebaseDatabase.getInstance().getReference("userInfos");
         tradeNotifyReference = FirebaseDatabase.getInstance().getReference("tradeNotify");
         productReference = FirebaseDatabase.getInstance().getReference("products");
@@ -66,13 +84,13 @@ public class HomeFragment extends Fragment {
         productAdapter = new HomeAdapter(getContext(), R.layout.home_product_layout, productList);
         productListView.setAdapter(productAdapter);
 
-        loadProducts();
+        loadProducts("");
         processTradeNotifications();
 
         return root;
     }
 
-    private void loadProducts() {
+    private void loadProducts(String query) {
         productReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -90,10 +108,17 @@ public class HomeFragment extends Fragment {
 
                     if (name != null && imageUrl != null) {
                         HomeItem product = new HomeItem(id, name, price, imageUrl, amount, description, seller);
-                        productList.add(product);
+
+                        if (query.isEmpty() || name.toLowerCase().contains(query.toLowerCase())) {
+                            productList.add(product);
+                        }
                     }
                 }
                 productAdapter.notifyDataSetChanged();
+
+                if (productList.isEmpty()) {
+                    Toast.makeText(getContext(), "無搜尋結果", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

@@ -22,7 +22,6 @@ public class write_command extends AppCompatActivity {
     private EditText commentEditText;
     private RadioGroup ratingRadioGroup;
     private Button submitButton;
-    private Button back_to_inform;
     private DatabaseReference databaseReference;
     float rate = 0;
     private FirebaseAuth mAuth;
@@ -38,7 +37,6 @@ public class write_command extends AppCompatActivity {
         commentEditText = findViewById(R.id.comment_edit_text);
         ratingRadioGroup = findViewById(R.id.rating_group);
         submitButton = findViewById(R.id.release_btn);
-        back_to_inform = findViewById(R.id.BacktoInform02_btn);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("reviews");
 
@@ -51,11 +49,6 @@ public class write_command extends AppCompatActivity {
             public void onClick(View v) {
                 submitReview(rate, productID, userEmail);
             }
-        });
-
-        back_to_inform.setOnClickListener(v -> {
-            Intent intent02 = new Intent(write_command.this, product_information.class);
-            startActivity(intent02);
         });
 
         RadioGroup.OnCheckedChangeListener ratingListener = new RadioGroup.OnCheckedChangeListener() {
@@ -89,8 +82,6 @@ public class write_command extends AppCompatActivity {
     }
 
     private void submitReview(float rate, String productID, String userEmail) {
-        System.out.println(rate + "AAAA");
-
         String comment = commentEditText.getText().toString().trim();
         int selectedRadioButtonId = ratingRadioGroup.getCheckedRadioButtonId();
 
