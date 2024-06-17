@@ -60,5 +60,7 @@
     <string name="hint_product_amount">Amount</string>
     <string name="hint_product_description">Description</string>
 
-    <string name="title_write_command">Write Command</string>
+    <string name="write_command">Write Command</string>
+    <string name="all_command">All Command</string>
+    <string name="product_information">Product Information</string>
 </resources>

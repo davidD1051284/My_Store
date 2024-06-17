@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mystore.database.Products;
+import com.example.mystore.ui.allCommand.All_command;
 import com.example.mystore.ui.home.HomeItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,8 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import com.bumptech.glide.Glide;
-
-import com.example.mystore.ProductDetailsActivity;
 
 import java.util.HashSet;
 import java.util.Set;

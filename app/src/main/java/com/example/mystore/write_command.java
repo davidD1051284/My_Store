@@ -7,11 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.mystore.database.command_database;
+import com.example.mystore.database.Command;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +37,7 @@ public class write_command extends AppCompatActivity {
         ratingRadioGroup = findViewById(R.id.rating_group);
         submitButton = findViewById(R.id.release_btn);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("reviews");
+        databaseReference = FirebaseDatabase.getInstance().getReference("commands");
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -78,7 +77,6 @@ public class write_command extends AppCompatActivity {
         };
 
         ratingRadioGroup.setOnCheckedChangeListener(ratingListener);
-        submitReview(2, productID, userEmail);//test用
     }
 
     private void submitReview(float rate, String productID, String userEmail) {
@@ -96,7 +94,7 @@ public class write_command extends AppCompatActivity {
         }
 
         String reviewId = databaseReference.push().getKey();
-        command_database review = new command_database(userEmail, comment, productID, rate);
+        Command review = new Command(userEmail, comment, productID, rate);
         if (reviewId != null) {
             databaseReference.child(reviewId).setValue(review);
             Toast.makeText(this, "評論已提交", Toast.LENGTH_SHORT).show();

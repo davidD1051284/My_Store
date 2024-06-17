@@ -61,5 +61,7 @@
     <string name="hint_product_amount">庫存</string>
     <string name="hint_product_description">描述</string>
 
-    <string name="title_write_command">寫評論</string>
+    <string name="write_command">寫評論</string>
+    <string name="all_command">所有評論</string>
+    <string name="product_information">商品資訊</string>
 </resources>

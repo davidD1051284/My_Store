@@ -102,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="@string/title_write_command"
+        android:text="@string/write_command"
         android:textColor="#000000"
         android:textSize="34sp"
         android:textStyle="bold"

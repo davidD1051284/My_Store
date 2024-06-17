@@ -48,7 +48,7 @@
             android:name=".write_command"
             android:exported="false" />
         <activity
-            android:name=".All_command"
+            android:name=".ui.allCommand.All_command"
             android:exported="false" />
         <activity
             android:name=".product_information"

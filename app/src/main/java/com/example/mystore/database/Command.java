@@ -1,15 +1,15 @@
 package com.example.mystore.database;
 
-public class command_database {
+public class Command {
     private String user;
     private String comment;
     private String productId;
     private float rating;
 
-    public command_database() {
+    public Command() {
     }
 
-    public command_database(String user, String comment, String productId, float rating) {
+    public Command(String user, String comment, String productId, float rating) {
         this.user = user;
         this.comment = comment;
         this.productId = productId;
